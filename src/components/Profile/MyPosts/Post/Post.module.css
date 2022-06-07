@@ -1,0 +1,15 @@
+.item {
+  color: rgb(255, 0, 255);
+  display: flex;
+}
+
+.item.active {
+  color: purple;
+}
+
+.item img {
+  height: 60px;
+  border-radius: 100px;
+
+  margin-right: 10px;
+}

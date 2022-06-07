@@ -1,0 +1,7 @@
+.item {
+  color: azure;
+}
+
+.item.active {
+  color: purple;
+}

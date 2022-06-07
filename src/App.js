@@ -1,7 +1,8 @@
 import './App.css';
 
-import Header from './components/Header';
-import Navbar from './components/Navbar';
+import Header from './components/Header/Header';
+import Navbar from './components/Navbar/Navbar';
+import Profile from './components/Profile/Profile';
 
 const App = () => {
   return (
@@ -9,18 +10,7 @@ const App = () => {
       <Header />
       <Navbar />
       <div className="mainContent">
-        Content
-        <div>Image</div>
-        <div>Ava description</div>
-        <div>
-          <h1>My Posts</h1>
-          <div>
-            New Post
-            <div>Post1</div>
-            <div>Post2</div>
-            <div>Post3</div>
-          </div>
-        </div>
+        <Profile />
       </div>
     </div>
   );
