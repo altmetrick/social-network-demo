@@ -1,0 +1,16 @@
+.myPostsWrapper {
+  padding: 10px;
+  border: rgb(170, 255, 0) 3px solid;
+}
+
+.myPostsWrapper h3 {
+  margin: 10px 0;
+}
+
+.myPostsWrapper h4 {
+  margin-bottom: 10px;
+}
+
+.postsBlock {
+  padding: 10px;
+}

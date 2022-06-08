@@ -1,0 +1,9 @@
+.profileInfoWrapper {
+  padding: 10px;
+  margin: 15px 0;
+  border: solid 3px black;
+}
+
+.descriptionBlock {
+  padding: 10px;
+}

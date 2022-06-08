@@ -3,17 +3,20 @@ import Posts from './Post/Post';
 
 const MyPosts = () => {
   return (
-    <div>
-      <h2>My Posts</h2>
-
-      <textarea />
+    <div className={s.myPostsWrapper}>
+      <h3>My Posts</h3>
       <div>
-        <button>Add Post</button>
+        <div>
+          <textarea />
+        </div>
+        <div>
+          <button>Add Post</button>
+        </div>
       </div>
-      <br />
 
-      <div>
-        New Post
+      <div className={s.postsBlock}>
+        <h4>Posts:</h4>
+
         <Posts message="hello" />
         <Posts message="How are you?" />
         <Posts message="Hello world" />
