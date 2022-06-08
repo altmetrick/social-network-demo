@@ -2,6 +2,7 @@ import { rerenderEntireTree } from '../rerender';
 
 const state = {
   profilePage: {
+    newPostText: 'Initial posts text from state',
     posts: [
       { id: '1', text: 'My first post', likes: 1 },
       { id: '2', text: "What's up, man, today...", likes: 12 },
@@ -27,15 +28,23 @@ const state = {
   },
 };
 
-export const addPost = (postText) => {
+export const addPost = () => {
   let post = {
     id: '11',
-    text: postText,
+    likes: 99,
+    text: state.profilePage.newPostText,
   };
 
   state.profilePage.posts.push(post);
-  console.log(state);
 
+  console.log(state);
+  state.profilePage.newPostText = ' ';
+  rerenderEntireTree(state);
+};
+
+export const updateNewPostText = (text) => {
+  state.profilePage.newPostText = text;
+  console.log('updated posts text');
   rerenderEntireTree(state);
 };
 
