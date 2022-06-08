@@ -1,5 +1,5 @@
 import s from './Dialogs.module.css';
-import { createRef } from 'react';
+
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 
@@ -12,11 +12,13 @@ const Dialogs = (props) => {
     <Message text={item.text} id={item.id} />
   ));
 
-  const newMessageEl = createRef();
+  const onTextareaChange = (e) => {
+    let text = e.target.value;
+    props.updateNewMessageText(text);
+  };
 
-  const addMessage = () => {
-    let text = newMessageEl.current.value;
-    alert(text);
+  const onButtonClick = () => {
+    props.addMessage();
   };
 
   return (
@@ -27,10 +29,13 @@ const Dialogs = (props) => {
         {messagesEls}
 
         <div>
-          <textarea ref={newMessageEl} />
+          <textarea
+            value={props.state.newMessageText}
+            onChange={onTextareaChange}
+          />
         </div>
         <div>
-          <button onClick={addMessage}>Add Message</button>
+          <button onClick={onButtonClick}>Add Message</button>
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ const state = {
     ],
   },
   messagesPage: {
+    newMessageText: 'Initial posts text from state',
     dialogs: [
       { id: 1, name: 'Jack' },
       { id: 2, name: 'Nick' },
@@ -27,7 +28,7 @@ const state = {
     ],
   },
 };
-
+//Profile
 export const addPost = () => {
   let post = {
     id: '11',
@@ -47,5 +48,24 @@ export const updateNewPostText = (text) => {
   console.log('updated posts text');
   rerenderEntireTree(state);
 };
+
+//Dialogs
+export const updateNewMessageText = (text) => {
+  state.messagesPage.newMessageText = text;
+  rerenderEntireTree(state);
+};
+
+export const addMessage = () => {
+  let message = {
+    id: 33,
+    text: state.messagesPage.newMessageText,
+  };
+
+  state.messagesPage.messages.push(message);
+  state.messagesPage.newMessageText = '';
+  rerenderEntireTree(state);
+};
+
+window.state = state;
 
 export default state;
