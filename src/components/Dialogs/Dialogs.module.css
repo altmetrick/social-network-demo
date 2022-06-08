@@ -1,14 +1,5 @@
-.dialogs {
+.dialogsWrapper {
   display: grid;
   grid-template-columns: 1fr 5fr;
   grid-column-gap: 15px;
-}
-
-.dialog a {
-  text-decoration: none;
-  color: rgb(0, 0, 0);
-}
-
-.dialog a:focus {
-  color: rgb(111, 16, 255);
 }

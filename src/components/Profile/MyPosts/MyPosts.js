@@ -1,25 +1,37 @@
 import s from './MyPosts.module.css';
-import Posts from './Post/Post';
+import Post from './Post/Post';
+import { createRef } from 'react';
 
-const MyPosts = () => {
+import { addPost } from '../../../redux/state';
+
+const MyPosts = (props) => {
+  const postsEls = props.posts.map((p) => (
+    <Post id={p.id} message={p.text} likes={p.likes} />
+  ));
+
+  const newPostElement = createRef();
+
+  const onButtonClick = () => {
+    let text = newPostElement.current.value;
+    addPost(text);
+  };
+
   return (
     <div className={s.myPostsWrapper}>
       <h3>My Posts</h3>
       <div>
         <div>
-          <textarea />
+          <textarea ref={newPostElement} />
         </div>
         <div>
-          <button>Add Post</button>
+          <button onClick={onButtonClick}>Add Post</button>
         </div>
       </div>
 
       <div className={s.postsBlock}>
         <h4>Posts:</h4>
 
-        <Posts message="hello" />
-        <Posts message="How are you?" />
-        <Posts message="Hello world" />
+        {postsEls}
       </div>
     </div>
   );

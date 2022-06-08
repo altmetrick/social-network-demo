@@ -1,32 +1,37 @@
-import { Link } from 'react-router-dom';
 import s from './Dialogs.module.css';
-
-const DialogItem = (props) => {
-  return (
-    <div className={s.dialog}>
-      <Link to={`/dialogs/${props.id}`}>{props.name}</Link>
-    </div>
-  );
-};
-
-const Message = (props) => {
-  return <div>{props.text}</div>;
-};
+import { createRef } from 'react';
+import DialogItem from './DialogItem/DialogItem';
+import Message from './Message/Message';
 
 const Dialogs = (props) => {
+  const dialogsEls = props.state.dialogs.map((item) => (
+    <DialogItem name={item.name} id={item.id} />
+  ));
+
+  const messagesEls = props.state.messages.map((item) => (
+    <Message text={item.text} id={item.id} />
+  ));
+
+  const newMessageEl = createRef();
+
+  const addMessage = () => {
+    let text = newMessageEl.current.value;
+    alert(text);
+  };
+
   return (
-    <div className={s.dialogs}>
-      <div className={s.dialogItems}>
-        <DialogItem name="Jack" id="1" />
-        <DialogItem name="Nick" id="2" />
-        <DialogItem name="Jessica" id="3" />
-        <DialogItem name="Sam" id="4" />
-      </div>
+    <div className={s.dialogsWrapper}>
+      <div className={s.dialogItems}>{dialogsEls}</div>
 
       <div className={s.messages}>
-        <Message text="Hello how are you?" />
-        <Message text="Bla bla bla " />
-        <Message text="Hi Hi hI Hi hi" />
+        {messagesEls}
+
+        <div>
+          <textarea ref={newMessageEl} />
+        </div>
+        <div>
+          <button onClick={addMessage}>Add Message</button>
+        </div>
       </div>
     </div>
   );
