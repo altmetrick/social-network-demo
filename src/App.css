@@ -5,7 +5,8 @@
 }
 
 .appWrapper {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+
   display: grid;
   height: 100vh;
   width: 95%;
@@ -13,7 +14,7 @@
   grid-row-gap: 10px;
   grid-column-gap: 10px;
 
-  grid-template-rows: 150px 1fr;
+  grid-template-rows: 120px 1fr;
   grid-template-columns: 2fr 10fr;
 
   grid-template-areas:
@@ -31,10 +32,12 @@
   grid-area: navbar;
   background-image: linear-gradient(240deg, #2af598 0%, #009efd 100%);
   border-bottom-left-radius: 15px;
+  padding: 15px;
 }
 
-.mainContent {
+.appContentWrapper {
   grid-area: mainContent;
   background-image: linear-gradient(120deg, #2af598 0%, #009efd 100%);
   border-bottom-right-radius: 15px;
+  padding: 20px;
 }

@@ -1,7 +1,8 @@
-.item {
-  color: azure;
+.item a {
+  text-decoration: none;
+  color: rgb(39, 34, 67);
 }
 
-.item.active {
-  color: purple;
+.item a:focus {
+  color: rgb(113, 79, 192);
 }
