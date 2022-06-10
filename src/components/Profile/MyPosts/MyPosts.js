@@ -7,13 +7,13 @@ const MyPosts = (props) => {
   ));
 
   const onButtonClick = () => {
-    props.addPost();
+    props.dispatch({ type: 'ADD_POST' });
   };
 
   const onTextareaChange = (e) => {
     let text = e.target.value;
 
-    props.updateNewPostText(text);
+    props.dispatch({ type: 'UPDATE_NEW_POST_TEXT', text: text });
   };
 
   return (
