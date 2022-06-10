@@ -1,4 +1,10 @@
-import { rerenderEntireTree } from '../rerender';
+let rerenderEntireTree = () => {
+  console.log('state have been changed');
+};
+
+export const subscribe = (observer) => {
+  rerenderEntireTree = observer;
+};
 
 const state = {
   profilePage: {
