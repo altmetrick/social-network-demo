@@ -1,77 +1,160 @@
-let rerenderEntireTree = () => {
-  console.log('state have been changed');
-};
+// let rerenderEntireTree = () => {
+//   console.log('state have been changed');
+// };
 
-export const subscribe = (observer) => {
-  rerenderEntireTree = observer;
-};
+// export const subscribe = (observer) => {
+//   rerenderEntireTree = observer;
+// };
 
-const state = {
-  profilePage: {
-    newPostText: 'Initial posts text from state',
-    posts: [
-      { id: '1', text: 'My first post', likes: 1 },
-      { id: '2', text: "What's up, man, today...", likes: 12 },
-      { id: '3', text: 'Jack of all trades master of none', likes: 13 },
-      { id: '4', text: 'Lorem ipsum Ola ', likes: 16 },
-    ],
+// const state = {
+//   profilePage: {
+//     newPostText: 'Initial posts text from state',
+//     posts: [
+//       { id: '1', text: 'My first post', likes: 1 },
+//       { id: '2', text: "What's up, man, today...", likes: 12 },
+//       { id: '3', text: 'Jack of all trades master of none', likes: 13 },
+//       { id: '4', text: 'Lorem ipsum Ola ', likes: 16 },
+//     ],
+//   },
+//   messagesPage: {
+//     newMessageText: 'Initial posts text from state',
+//     dialogs: [
+//       { id: 1, name: 'Jack' },
+//       { id: 2, name: 'Nick' },
+//       { id: 3, name: 'Jess' },
+//       { id: 4, name: 'Ket' },
+//       { id: 5, name: 'Sam' },
+//     ],
+//     messages: [
+//       { id: 1, text: 'Hello kdfsdf' },
+//       { id: 2, text: 'HOw are you bro ' },
+//       { id: 3, text: 'Hi Jack' },
+//       { id: 4, text: 'Hey hey hey' },
+//       { id: 5, text: 'Ola Ola Ola' },
+//     ],
+//   },
+// };
+// //Profile
+// export const addPost = () => {
+//   let post = {
+//     id: '11',
+//     likes: 99,
+//     text: state.profilePage.newPostText,
+//   };
+
+//   state.profilePage.posts.push(post);
+
+//   console.log(state);
+//   state.profilePage.newPostText = ' ';
+//   rerenderEntireTree(state);
+// };
+
+// export const updateNewPostText = (text) => {
+//   state.profilePage.newPostText = text;
+//   console.log('updated posts text');
+//   rerenderEntireTree(state);
+// };
+
+// //Dialogs
+// export const updateNewMessageText = (text) => {
+//   state.messagesPage.newMessageText = text;
+//   rerenderEntireTree(state);
+// };
+
+// export const addMessage = () => {
+//   let message = {
+//     id: 33,
+//     text: state.messagesPage.newMessageText,
+//   };
+
+//   state.messagesPage.messages.push(message);
+//   state.messagesPage.newMessageText = '';
+//   rerenderEntireTree(state);
+// };
+
+// window.state = state;
+
+const store = {
+  _state: {
+    profilePage: {
+      newPostText: 'Initial posts text from state',
+      posts: [
+        { id: '1', text: 'My first post', likes: 1 },
+        { id: '2', text: "What's up, man, today...", likes: 12 },
+        { id: '3', text: 'Jack of all trades master of none', likes: 13 },
+        { id: '4', text: 'Lorem ipsum Ola ', likes: 16 },
+      ],
+    },
+    messagesPage: {
+      newMessageText: 'Initial posts text from state',
+      dialogs: [
+        { id: 1, name: 'Jack' },
+        { id: 2, name: 'Nick' },
+        { id: 3, name: 'Jess' },
+        { id: 4, name: 'Ket' },
+        { id: 5, name: 'Sam' },
+      ],
+      messages: [
+        { id: 1, text: 'Hello kdfsdf' },
+        { id: 2, text: 'HOw are you bro ' },
+        { id: 3, text: 'Hi Jack' },
+        { id: 4, text: 'Hey hey hey' },
+        { id: 5, text: 'Ola Ola Ola' },
+      ],
+    },
   },
-  messagesPage: {
-    newMessageText: 'Initial posts text from state',
-    dialogs: [
-      { id: 1, name: 'Jack' },
-      { id: 2, name: 'Nick' },
-      { id: 3, name: 'Jess' },
-      { id: 4, name: 'Ket' },
-      { id: 5, name: 'Sam' },
-    ],
-    messages: [
-      { id: 1, text: 'Hello kdfsdf' },
-      { id: 2, text: 'HOw are you bro ' },
-      { id: 3, text: 'Hi Jack' },
-      { id: 4, text: 'Hey hey hey' },
-      { id: 5, text: 'Ola Ola Ola' },
-    ],
+
+  _subscriber() {
+    console.log('state was changed');
+  },
+
+  subscribe(observer) {
+    this._subscriber = observer;
+  },
+
+  getState() {
+    return this._state;
+  },
+
+  //Profile
+  addPost() {
+    let post = {
+      id: '11',
+      likes: 99,
+      text: this._state.profilePage.newPostText,
+    };
+
+    this._state.profilePage.posts.push(post);
+
+    console.log(this._state);
+    this._state.profilePage.newPostText = ' ';
+    this._subscriber(this._state);
+  },
+
+  updateNewPostText(text) {
+    this._state.profilePage.newPostText = text;
+    console.log('updated posts text');
+    this._subscriber(this._state);
+  },
+
+  //Dialogs
+  updateNewMessageText(text) {
+    this._state.messagesPage.newMessageText = text;
+    this._subscriber(this._state);
+  },
+
+  addMessage() {
+    let message = {
+      id: 33,
+      text: this._state.messagesPage.newMessageText,
+    };
+
+    this._state.messagesPage.messages.push(message);
+    this._state.messagesPage.newMessageText = '';
+    this._subscriber(this._state);
   },
 };
-//Profile
-export const addPost = () => {
-  let post = {
-    id: '11',
-    likes: 99,
-    text: state.profilePage.newPostText,
-  };
 
-  state.profilePage.posts.push(post);
+window.store = store;
 
-  console.log(state);
-  state.profilePage.newPostText = ' ';
-  rerenderEntireTree(state);
-};
-
-export const updateNewPostText = (text) => {
-  state.profilePage.newPostText = text;
-  console.log('updated posts text');
-  rerenderEntireTree(state);
-};
-
-//Dialogs
-export const updateNewMessageText = (text) => {
-  state.messagesPage.newMessageText = text;
-  rerenderEntireTree(state);
-};
-
-export const addMessage = () => {
-  let message = {
-    id: 33,
-    text: state.messagesPage.newMessageText,
-  };
-
-  state.messagesPage.messages.push(message);
-  state.messagesPage.newMessageText = '';
-  rerenderEntireTree(state);
-};
-
-window.state = state;
-
-export default state;
+export default store;
