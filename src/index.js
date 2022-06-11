@@ -2,7 +2,7 @@ import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import store from './redux/state';
+import store from './redux/redux-store';
 
 let state = store.getState();
 
@@ -14,6 +14,9 @@ const rerenderEntireTreeIndex = (state) => {
   );
 };
 
-store.subscribe(rerenderEntireTreeIndex);
-
 rerenderEntireTreeIndex(state);
+
+store.subscribe(() => {
+  let state = store.getState();
+  rerenderEntireTreeIndex(state);
+});

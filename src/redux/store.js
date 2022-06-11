@@ -1,5 +1,5 @@
-import profileReducer from './profile-reducer';
-import dialogsReducer from './dialogs-reducer';
+import profileReducer from './reducers/profile-reducer';
+import dialogsReducer from './reducers/dialogs-reducer';
 
 const store = {
   _state: {
@@ -51,6 +51,6 @@ const store = {
   },
 };
 
-window.store = store;
+//window.store = store;
 
 export default store;

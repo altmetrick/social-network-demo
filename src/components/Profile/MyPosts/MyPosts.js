@@ -1,7 +1,10 @@
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
-import { addPostAC, updateNewPostTextAC } from '../../../redux/profile-reducer';
+import {
+  addPostAC,
+  updateNewPostTextAC,
+} from '../../../redux/reducers/profile-reducer';
 
 const MyPosts = (props) => {
   const postsEls = props.posts.map((p) => (
