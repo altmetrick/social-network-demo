@@ -2,6 +2,10 @@ import s from './Dialogs.module.css';
 
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
+import {
+  addMessageAC,
+  updateNewMessageTextAC,
+} from '../../redux/dialogs-reducer';
 
 const Dialogs = (props) => {
   const dialogsEls = props.state.dialogs.map((item) => (
@@ -15,12 +19,11 @@ const Dialogs = (props) => {
   const onTextareaChange = (e) => {
     let text = e.target.value;
 
-    let action = { type: 'UPDATE_NEW_MESSAGE_TEXT', text };
-    props.dispatch(action);
+    props.dispatch(updateNewMessageTextAC(text));
   };
 
   const onButtonClick = () => {
-    props.dispatch({ type: 'ADD_MESSAGE' });
+    props.dispatch(addMessageAC());
   };
 
   return (

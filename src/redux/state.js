@@ -1,3 +1,6 @@
+import profileReducer from './profile-reducer';
+import dialogsReducer from './dialogs-reducer';
+
 const store = {
   _state: {
     profilePage: {
@@ -9,7 +12,7 @@ const store = {
         { id: '4', text: 'Lorem ipsum Ola ', likes: 16 },
       ],
     },
-    messagesPage: {
+    dialogsPage: {
       newMessageText: 'Initial text',
       dialogs: [
         { id: 1, name: 'Jack' },
@@ -41,85 +44,9 @@ const store = {
   },
 
   dispatch(action) {
-    switch (action.type) {
-      //Profile
-      case 'UPDATE_NEW_POST_TEXT':
-        this._state.profilePage.newPostText = action.text;
-        console.log('updated posts text');
-        this._callSubscriber(this._state);
-        break;
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
 
-      case 'ADD_POST':
-        let post = {
-          id: '11',
-          likes: 99,
-          text: this._state.profilePage.newPostText,
-        };
-
-        this._state.profilePage.posts.push(post);
-
-        console.log(this._state);
-        this._state.profilePage.newPostText = ' ';
-        this._callSubscriber(this._state);
-        break;
-
-      //Dialogs
-      case 'UPDATE_NEW_MESSAGE_TEXT':
-        this._state.messagesPage.newMessageText = action.text;
-        this._callSubscriber(this._state);
-        break;
-
-      case 'ADD_MESSAGE':
-        let message = {
-          id: 33,
-          text: this._state.messagesPage.newMessageText,
-        };
-
-        this._state.messagesPage.messages.push(message);
-        this._state.messagesPage.newMessageText = '';
-        this._callSubscriber(this._state);
-        break;
-
-      default:
-        break;
-    }
-  },
-
-  //Profile
-  addPost() {
-    let post = {
-      id: '11',
-      likes: 99,
-      text: this._state.profilePage.newPostText,
-    };
-
-    this._state.profilePage.posts.push(post);
-
-    console.log(this._state);
-    this._state.profilePage.newPostText = ' ';
-    this._callSubscriber(this._state);
-  },
-
-  updateNewPostText(text) {
-    this._state.profilePage.newPostText = text;
-    console.log('updated posts text');
-    this._callSubscriber(this._state);
-  },
-
-  //Dialogs
-  updateNewMessageText(text) {
-    this._state.messagesPage.newMessageText = text;
-    this._callSubscriber(this._state);
-  },
-
-  addMessage() {
-    let message = {
-      id: 33,
-      text: this._state.messagesPage.newMessageText,
-    };
-
-    this._state.messagesPage.messages.push(message);
-    this._state.messagesPage.newMessageText = '';
     this._callSubscriber(this._state);
   },
 };

@@ -9,12 +9,7 @@ let state = store.getState();
 const rerenderEntireTreeIndex = (state) => {
   console.log('rerender tree');
   ReactDOM.render(
-    <App
-      state={state}
-      dispatch={store.dispatch.bind(store)}
-      addMessage={store.addMessage.bind(store)}
-      updateNewMessageText={store.updateNewMessageText.bind(store)}
-    />,
+    <App state={state} dispatch={store.dispatch.bind(store)} />,
     document.getElementById('root')
   );
 };
