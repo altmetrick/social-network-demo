@@ -1,24 +1,19 @@
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
-import {
-  addPostAC,
-  updateNewPostTextAC,
-} from '../../../redux/reducers/profile-reducer';
-
 const MyPosts = (props) => {
   const postsEls = props.posts.map((p) => (
     <Post id={p.id} message={p.text} likes={p.likes} />
   ));
 
   const onButtonClick = () => {
-    props.dispatch(addPostAC());
+    props.addPost();
   };
 
   const onTextareaChange = (e) => {
     let text = e.target.value;
 
-    props.dispatch(updateNewPostTextAC(text));
+    props.onPostChange(text);
   };
 
   return (
