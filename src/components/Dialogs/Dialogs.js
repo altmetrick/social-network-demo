@@ -3,6 +3,12 @@ import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 
+import { connect } from 'react-redux';
+import {
+  addMessageAC,
+  updateNewMessageTextAC,
+} from '../../redux/reducers/dialogs-reducer';
+
 const Dialogs = (props) => {
   const dialogsEls = props.dialogs.map((item) => (
     <DialogItem name={item.name} id={item.id} />
@@ -15,7 +21,7 @@ const Dialogs = (props) => {
   const onTextareaChange = (e) => {
     let text = e.target.value;
 
-    props.onMessageChange(text);
+    props.updateNewMessageText(text);
   };
 
   const onButtonClick = () => {
@@ -41,4 +47,24 @@ const Dialogs = (props) => {
   );
 };
 
-export default Dialogs;
+const mapStateToProps = (state) => {
+  return {
+    dialogs: state.dialogsPage.dialogs,
+    messages: state.dialogsPage.messages,
+    newMessageText: state.dialogsPage.newMessageText,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateNewMessageText: (text) => {
+      dispatch(updateNewMessageTextAC(text));
+    },
+
+    addMessage: () => {
+      dispatch(addMessageAC());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dialogs);

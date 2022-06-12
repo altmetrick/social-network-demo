@@ -13,7 +13,7 @@ const MyPosts = (props) => {
   const onTextareaChange = (e) => {
     let text = e.target.value;
 
-    props.onPostChange(text);
+    props.updateNewPostText(text);
   };
 
   return (
