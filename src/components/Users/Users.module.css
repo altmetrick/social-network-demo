@@ -13,3 +13,8 @@
 .userBio {
   margin-left: 10px;
 }
+
+.selected {
+  color: rgb(253, 7, 253);
+  font-weight: bold;
+}
