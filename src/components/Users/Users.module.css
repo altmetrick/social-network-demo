@@ -1,0 +1,15 @@
+.userWrapper {
+  display: flex;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 2px solid rgb(32, 255, 58);
+}
+
+.userWrapper img {
+  width: 70px;
+  border-radius: 100px;
+}
+
+.userBio {
+  margin-left: 10px;
+}
