@@ -1,38 +1,48 @@
 import s from './Users.module.css';
+import userImage from './../../assets/images/User_default_avatar.png';
 
-let users = [
-  { id: '4', isFollowed: true, fullName: 'JackBone', city: 'New York' },
-  { id: '24', isFollowed: false, fullName: 'NickSparrow', city: 'Berlin' },
-  { id: '35', isFollowed: true, fullName: 'Marge Simpson', city: 'Barcelona' },
-  { id: '45', isFollowed: false, fullName: 'Sally Witt', city: 'Kiev' },
-  { id: '55', isFollowed: true, fullName: 'Ted Smith', city: 'Minsk' },
-];
+import axios from 'axios';
 
-const imgURL =
-  'https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png';
+let ss = {
+  name: 'Dicastes',
+  id: 24440,
+  uniqueUrlName: null,
+  photos: {
+    small: null,
+    large: null,
+  },
+  status: null,
+  followed: false,
+};
 
 const Users = (props) => {
   if (props.users.length === 0) {
-    props.setUsers(users);
+    axios
+      .get('https://social-network.samuraijs.com/api/1.0/users')
+      .then((res) => {
+        props.setUsers(res.data.items);
+      });
   }
 
   let usersEls = props.users.map((user) => (
     <div key={user.id} className={s.userWrapper}>
       <div>
         <div>
-          <img src={imgURL} />
+          <img
+            src={user.photos.small === null ? userImage : user.photos.small}
+          />
         </div>
 
         <div>
-          <button onClick={() => props.toggleIsFollowed(user.id)}>
-            {user.isFollowed ? 'Unfollow' : 'Follow'}
+          <button onClick={() => props.toggleFollowed(user.id)}>
+            {user.followed ? 'Unfollow' : 'Follow'}
           </button>
         </div>
       </div>
 
       <div className={s.userBio}>
-        <h3>{user.fullName}</h3>
-        <h4>{user.city}</h4>
+        <h3>{user.name}</h3>
+        <h4>location: ---</h4>
       </div>
     </div>
   ));

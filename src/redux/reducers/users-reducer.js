@@ -1,4 +1,4 @@
-const TOGGLE_IS_FOLLOWED = 'TOGGLE_IS_FOLLOWED';
+const TOGGLE_FOLLOWED = 'TOGGLE_FOLLOWED';
 const SET_USERS = 'SET_USERS';
 
 const initialState = {
@@ -7,12 +7,12 @@ const initialState = {
 
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TOGGLE_IS_FOLLOWED:
+    case TOGGLE_FOLLOWED:
       return {
         ...state,
         users: state.users.map((user) => {
           if (action.userId === user.id) {
-            return { ...user, isFollowed: !user.isFollowed };
+            return { ...user, followed: !user.followed };
           }
           return user;
         }),
@@ -30,8 +30,8 @@ const usersReducer = (state = initialState, action) => {
 };
 
 //Action Creators
-export const toggleIsFollowedAC = (userId) => ({
-  type: TOGGLE_IS_FOLLOWED,
+export const toggleFollowedAC = (userId) => ({
+  type: TOGGLE_FOLLOWED,
   userId,
 });
 
