@@ -1,5 +1,6 @@
 import s from './Users.module.css';
 import userImage from './../../assets/images/User_default_avatar.png';
+import { Link } from 'react-router-dom';
 
 const Users = (props) => {
   let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -25,9 +26,11 @@ const Users = (props) => {
     <div key={user.id} className={s.userWrapper}>
       <div>
         <div>
-          <img
-            src={user.photos.small === null ? userImage : user.photos.small}
-          />
+          <Link to={`/profile/${user.id}`}>
+            <img
+              src={user.photos.small === null ? userImage : user.photos.small}
+            />
+          </Link>
         </div>
 
         <div>

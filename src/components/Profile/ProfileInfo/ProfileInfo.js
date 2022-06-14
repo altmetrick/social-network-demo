@@ -1,14 +1,20 @@
 import s from './ProfileInfo.module.css';
 
-const ProfileInfo = () => {
+const ProfileInfo = (props) => {
   return (
     <div className={s.profileInfoWrapper}>
       <h3>Profile Info</h3>
       <div>
-        <div>Image</div>
+        <div>
+          <img src={props.userData.photos.small} />
+        </div>
+
         <div className={s.descriptionBlock}>
-          <div>Ava</div>
-          <div>Description</div>
+          <div>
+            <h4>{props.userData.fullName}</h4>
+          </div>
+          <div>{props.userData.aboutMe}</div>
+          <div>User Id: {props.userData.userId}</div>
         </div>
       </div>
     </div>
