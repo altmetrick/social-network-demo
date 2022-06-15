@@ -6,7 +6,7 @@ const ProfileInfo = (props) => {
       <h3>Profile Info</h3>
       <div>
         <div>
-          <img src={props.userData.photos.small} />
+          <img src={props.userData.photos.large} />
         </div>
 
         <div className={s.descriptionBlock}>

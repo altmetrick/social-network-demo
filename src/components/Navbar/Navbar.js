@@ -3,6 +3,8 @@ import s from './Navbar.module.css';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+  let defaultUserId = 2;
+
   return (
     <div className="navbar">
       <div className={s.item}>
@@ -10,7 +12,7 @@ const Navbar = () => {
       </div>
 
       <div className={s.item}>
-        <Link to="/profile/xx">Profile</Link>
+        <Link to={`/profile/${defaultUserId}`}>Profile</Link>
       </div>
 
       <div className={s.item}>
