@@ -2,7 +2,7 @@ import './App.css';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Header from './components/Header/Header';
+import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
@@ -13,7 +13,7 @@ const App = (props) => {
   return (
     <BrowserRouter>
       <div className="appWrapper">
-        <Header />
+        <HeaderContainer />
         <Navbar />
         <div className="appContentWrapper">
           <Routes>
