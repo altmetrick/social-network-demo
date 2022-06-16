@@ -19,7 +19,13 @@ class UsersContainer extends React.Component {
 
     axios
       .get(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`
+        `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`,
+        {
+          withCredentials: true,
+          headers: {
+            'API-KEY': 'ec583d87-d3ed-4145-8d1b-a8d7cb2e61e2',
+          },
+        }
       )
       .then((res) => {
         this.props.setUsers(res.data.items);
@@ -36,7 +42,13 @@ class UsersContainer extends React.Component {
 
     axios
       .get(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNum}`
+        `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNum}`,
+        {
+          withCredentials: true,
+          headers: {
+            'API-KEY': 'ec583d87-d3ed-4145-8d1b-a8d7cb2e61e2',
+          },
+        }
       )
       .then((res) => {
         this.props.toggleIsFetching(false);
