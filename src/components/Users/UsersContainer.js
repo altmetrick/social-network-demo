@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { usersAPI } from '../../api/api';
 
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
@@ -17,16 +18,8 @@ class UsersContainer extends React.Component {
   componentDidMount() {
     this.props.toggleIsFetching(true);
 
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`,
-        {
-          withCredentials: true,
-          headers: {
-            'API-KEY': 'ec583d87-d3ed-4145-8d1b-a8d7cb2e61e2',
-          },
-        }
-      )
+    usersAPI
+      .getUsers(this.props.pageSize, this.props.currentPage)
       .then((res) => {
         this.props.setUsers(res.data.items);
         this.props.toggleIsFetching(false);
@@ -40,21 +33,11 @@ class UsersContainer extends React.Component {
     this.props.setCurrentPage(pageNum);
     this.props.toggleIsFetching(true);
 
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNum}`,
-        {
-          withCredentials: true,
-          headers: {
-            'API-KEY': 'ec583d87-d3ed-4145-8d1b-a8d7cb2e61e2',
-          },
-        }
-      )
-      .then((res) => {
-        this.props.toggleIsFetching(false);
+    usersAPI.getUsers(this.props.pageSize, pageNum).then((res) => {
+      this.props.toggleIsFetching(false);
 
-        this.props.setUsers(res.data.items);
-      });
+      this.props.setUsers(res.data.items);
+    });
   };
 
   render() {
