@@ -1,8 +1,6 @@
 import s from './Users.module.css';
 import userImage from './../../assets/images/User_default_avatar.png';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { usersAPI } from '../../api/api';
 
 const Users = (props) => {
   let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -25,28 +23,11 @@ const Users = (props) => {
   ));
 
   const followUser = (userId) => {
-    props.toggleFollowingProgress(true, userId);
-
-    usersAPI.follow(userId).then((data) => {
-      if (data.resultCode === 0) {
-        props.toggleFollowed(userId);
-
-        console.log(`++ Followed user with id: ${userId}`);
-      }
-      props.toggleFollowingProgress(false, userId);
-    });
+    props.follow(userId);
   };
 
   const unFollowUser = (userId) => {
-    props.toggleFollowingProgress(true, userId);
-
-    usersAPI.unfollow(userId).then((data) => {
-      if (data.resultCode === 0) {
-        props.toggleFollowed(userId);
-        console.log(`-- Unfollowed user with userId: ${userId}`);
-      }
-      props.toggleFollowingProgress(false, userId);
-    });
+    props.unfollow(userId);
   };
 
   let usersEls = props.users.map((user) => (
