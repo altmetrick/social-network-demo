@@ -1,7 +1,8 @@
 import s from './Profile.module.css';
 import { Component } from 'react';
-
+import { Navigate } from 'react-router-dom';
 import Profile from './Profile';
+import AuthRedirect from '../../hoc/AuthRedirect';
 
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -25,10 +26,12 @@ let WithUrlParamsProfileContainer = (props) => {
   return <ProfileContainer {...props} params={params} />;
 };
 
+const WithAuthRedirectComponent = AuthRedirect(WithUrlParamsProfileContainer);
+
 const mapStateToProps = (state) => ({
   userData: state.profilePage.userProfileData,
 });
 
 export default connect(mapStateToProps, { getProfile })(
-  WithUrlParamsProfileContainer
+  WithAuthRedirectComponent
 );

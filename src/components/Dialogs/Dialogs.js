@@ -3,11 +3,13 @@ import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 
+import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   addMessageAC,
   updateNewMessageTextAC,
 } from '../../redux/reducers/dialogs-reducer';
+import AuthRedirect from '../../hoc/AuthRedirect';
 
 const Dialogs = (props) => {
   const dialogsEls = props.dialogs.map((item) => (
@@ -47,6 +49,8 @@ const Dialogs = (props) => {
   );
 };
 
+const WithAuthRedirectComponent = AuthRedirect(Dialogs);
+
 const mapStateToProps = (state) => {
   return {
     dialogs: state.dialogsPage.dialogs,
@@ -60,11 +64,13 @@ const mapDispatchToProps = (dispatch) => {
     updateNewMessageText: (text) => {
       dispatch(updateNewMessageTextAC(text));
     },
-
     addMessage: () => {
       dispatch(addMessageAC());
     },
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WithAuthRedirectComponent);
