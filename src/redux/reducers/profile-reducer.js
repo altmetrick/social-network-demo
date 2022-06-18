@@ -3,6 +3,7 @@ import { profileAPI } from '../../api/api';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
 const ADD_POST = 'ADD_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_USER_STATUS = 'SET_USER_STATUS';
 
 const initialState = {
   newPostText: 'Initial text',
@@ -13,6 +14,7 @@ const initialState = {
     { id: '4', text: 'Lorem ipsum Ola ', likes: 16 },
   ],
   userProfileData: null,
+  userStatus: '',
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -42,6 +44,12 @@ const profileReducer = (state = initialState, action) => {
         userProfileData: action.user,
       };
 
+    case SET_USER_STATUS:
+      return {
+        ...state,
+        userStatus: action.text,
+      };
+
     default:
       return state;
   }
@@ -61,11 +69,34 @@ export const setUserProfileAC = (user) => ({
   user,
 });
 
+export const setUserStatusAC = (text) => ({
+  type: SET_USER_STATUS,
+  text,
+});
+
 //Thunk Creators
 export const getProfileThC = (userId) => {
   return (dispatch) => {
     profileAPI.getProfileData(userId).then((data) => {
       dispatch(setUserProfileAC(data));
+    });
+  };
+};
+
+export const getUserStatusThC = (userId) => {
+  return (dispatch) => {
+    profileAPI.getStatus(userId).then((data) => {
+      dispatch(setUserStatusAC(data));
+    });
+  };
+};
+
+export const updateUserStatusThC = (statusText) => {
+  return (dispatch) => {
+    profileAPI.updateStatus(statusText).then((res) => {
+      if (res.data.resultCode === 0) {
+        dispatch(setUserStatusAC(statusText));
+      }
     });
   };
 };

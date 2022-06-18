@@ -9,7 +9,11 @@ const Profile = (props) => {
     <div>
       <h2>Profile</h2>
       {props.userData ? (
-        <ProfileInfo userData={props.userData} />
+        <ProfileInfo
+          userData={props.userData}
+          userStatus={props.userStatus}
+          updateUserStatus={props.updateUserStatus}
+        />
       ) : (
         <Preloader />
       )}

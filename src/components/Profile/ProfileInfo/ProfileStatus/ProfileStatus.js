@@ -2,7 +2,7 @@ import React from 'react';
 
 class ProfileStatus extends React.Component {
   state = {
-    status: '',
+    status: this.props.userStatus,
     aditMode: false,
   };
 
@@ -12,6 +12,7 @@ class ProfileStatus extends React.Component {
 
   deactivateAditMode = () => {
     this.setState({ aditMode: false });
+    this.props.updateUserStatus(this.state.status);
   };
 
   onTextareaChange = (e) => {
@@ -26,7 +27,7 @@ class ProfileStatus extends React.Component {
         {!this.state.aditMode && (
           <div>
             <span onClick={this.activateAditMode}>
-              {this.state.status ? this.state.status : 'Status: ----'}
+              {this.props.userStatus || 'Status: ----'}
             </span>
           </div>
         )}

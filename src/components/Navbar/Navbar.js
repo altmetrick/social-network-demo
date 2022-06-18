@@ -3,7 +3,7 @@ import s from './Navbar.module.css';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-  let defaultUserId = 2;
+  let defaultUserId = 22896;
 
   return (
     <div className="navbar">
