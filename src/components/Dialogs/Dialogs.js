@@ -3,8 +3,8 @@ import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 
-import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import {
   addMessageAC,
   updateNewMessageTextAC,
@@ -49,8 +49,6 @@ const Dialogs = (props) => {
   );
 };
 
-const WithAuthRedirectComponent = AuthRedirect(Dialogs);
-
 const mapStateToProps = (state) => {
   return {
     dialogs: state.dialogsPage.dialogs,
@@ -70,7 +68,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WithAuthRedirectComponent);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  AuthRedirect
+)(Dialogs);
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(WithAuthRedirectComponent);

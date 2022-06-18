@@ -1,5 +1,7 @@
 import s from './ProfileInfo.module.css';
 
+import ProfileStatus from './ProfileStatus/ProfileStatus';
+
 const ProfileInfo = (props) => {
   return (
     <div className={s.profileInfoWrapper}>
@@ -13,6 +15,7 @@ const ProfileInfo = (props) => {
           <div>
             <h4>{props.userData.fullName}</h4>
           </div>
+          <ProfileStatus />
           <div>{props.userData.aboutMe}</div>
           <div>User Id: {props.userData.userId}</div>
         </div>
