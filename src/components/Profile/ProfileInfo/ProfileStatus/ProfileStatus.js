@@ -6,6 +6,14 @@ class ProfileStatus extends React.Component {
     aditMode: false,
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.userStatus !== prevProps.userStatus) {
+      this.setState({ status: this.props.userStatus });
+    }
+
+    console.log('com was updated');
+  }
+
   activateAditMode = () => {
     this.setState({ aditMode: true });
   };
@@ -22,6 +30,7 @@ class ProfileStatus extends React.Component {
   };
 
   render() {
+    console.log('render');
     return (
       <div>
         {!this.state.aditMode && (

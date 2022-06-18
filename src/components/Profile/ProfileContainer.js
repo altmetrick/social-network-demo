@@ -19,10 +19,7 @@ class ProfileContainer extends Component {
 
     this.props.getProfile(userId);
 
-    setTimeout(() => {
-      this.props.getUserStatus(userId);
-    }, 1000);
-    //this.props.getUserStatus(userId);
+    this.props.getUserStatus(userId);
   }
 
   render() {
