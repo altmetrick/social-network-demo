@@ -1,15 +1,27 @@
 import { Field, reduxForm } from 'redux-form';
+import { FormControlWithInputTag } from '../common/FormControls/FormControls';
+
+const required = (value) => (value ? undefined : 'Required Field');
 
 const LoginForm = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <div>
-        <Field name="login" component="input" type="text" placeholder="Login" />
+        <Field
+          validate={[required]}
+          name="login"
+          component={FormControlWithInputTag}
+          inputTag={'input'}
+          type="text"
+          placeholder="Login"
+        />
       </div>
       <div>
         <Field
+          validate={[required]}
           name="password"
-          component="input"
+          component={FormControlWithInputTag}
+          inputTag={'input'}
           type="password"
           placeholder="Password"
         />

@@ -5,11 +5,35 @@ import Message from './Message/Message';
 
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import {
-  addMessageAC,
-  updateNewMessageTextAC,
-} from '../../redux/reducers/dialogs-reducer';
+import { addMessageAC } from '../../redux/reducers/dialogs-reducer';
 import AuthRedirect from '../../hoc/AuthRedirect';
+import { Field, reduxForm, reset } from 'redux-form';
+import { maxLength } from './../../utilities/validators/validators';
+import { CreateControlFormEl } from '../common/FormControls/FormControls';
+
+const maxLength15 = maxLength(15);
+const Textarea = CreateControlFormEl('textarea');
+
+let AddMessageForm = (props) => {
+  return (
+    <form onSubmit={props.handleSubmit}>
+      <div>
+        <Field
+          validate={[maxLength15]}
+          name="messageText"
+          component={Textarea}
+          type="text"
+          placeholder="Write your message"
+        />
+      </div>
+      <div>
+        <button type="submit">Add Message</button>
+      </div>
+    </form>
+  );
+};
+
+AddMessageForm = reduxForm({ form: 'dialogsAddMessageForm' })(AddMessageForm);
 
 const Dialogs = (props) => {
   const dialogsEls = props.dialogs.map((item) => (
@@ -20,14 +44,12 @@ const Dialogs = (props) => {
     <Message text={item.text} id={item.id} />
   ));
 
-  const onTextareaChange = (e) => {
-    let text = e.target.value;
+  const submit = (values, dispatch) => {
+    console.log(values);
 
-    props.updateNewMessageText(text);
-  };
+    props.addMessage(values.messageText);
 
-  const onButtonClick = () => {
-    props.addMessage();
+    dispatch(reset('dialogsAddMessageForm'));
   };
 
   return (
@@ -38,12 +60,7 @@ const Dialogs = (props) => {
         <h4>Messages</h4>
         {messagesEls}
 
-        <div>
-          <textarea value={props.newMessageText} onChange={onTextareaChange} />
-        </div>
-        <div>
-          <button onClick={onButtonClick}>Add Message</button>
-        </div>
+        <AddMessageForm onSubmit={submit} />
       </div>
     </div>
   );
@@ -53,27 +70,18 @@ const mapStateToProps = (state) => {
   return {
     dialogs: state.dialogsPage.dialogs,
     messages: state.dialogsPage.messages,
-    newMessageText: state.dialogsPage.newMessageText,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateNewMessageText: (text) => {
-      dispatch(updateNewMessageTextAC(text));
-    },
-    addMessage: () => {
-      dispatch(addMessageAC());
+    addMessage: (text) => {
+      dispatch(addMessageAC(text));
     },
   };
 };
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  AuthRedirect
+  connect(mapStateToProps, mapDispatchToProps)
+  // AuthRedirect
 )(Dialogs);
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(WithAuthRedirectComponent);
