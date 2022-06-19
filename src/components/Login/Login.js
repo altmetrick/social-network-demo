@@ -1,5 +1,9 @@
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 import { FormControlWithInputTag } from '../common/FormControls/FormControls';
+import { connect } from 'react-redux';
+
+import { loginThC as login } from '../../redux/reducers/auth-reducer';
+import { Navigate } from 'react-router-dom';
 
 const required = (value) => (value ? undefined : 'Required Field');
 
@@ -9,11 +13,11 @@ const LoginForm = (props) => {
       <div>
         <Field
           validate={[required]}
-          name="login"
+          name="email"
           component={FormControlWithInputTag}
           inputTag={'input'}
           type="text"
-          placeholder="Login"
+          placeholder="Email"
         />
       </div>
       <div>
@@ -37,12 +41,18 @@ const LoginForm = (props) => {
   );
 };
 
-const LoginReduxForm = reduxForm({ form: 'login' })(LoginForm);
+const LoginReduxForm = reduxForm({ form: 'loginForm' })(LoginForm);
 
 const Login = (props) => {
-  const submit = (values) => {
-    console.log(values);
+  const submit = (values, dispatch) => {
+    const { email, password, rememberMe } = values;
+    props.login(email, password, rememberMe);
+    dispatch(reset('loginForm'));
   };
+
+  if (props.isAuth) {
+    return <Navigate to={`/profile/${props.userId}`} />;
+  }
 
   return (
     <div>
@@ -51,4 +61,9 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+  isAuth: state.authData.isAuth,
+  userId: state.authData.userId,
+});
+
+export default connect(mapStateToProps, { login })(Login);

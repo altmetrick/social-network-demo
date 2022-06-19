@@ -4,7 +4,12 @@ const Header = (props) => {
   return (
     <div className="header">
       {props.isAuth ? (
-        <div> {props.login} </div>
+        <div>
+          <div>{props.login}</div>
+          <div>
+            <button onClick={props.logOut}>LogOut</button>
+          </div>
+        </div>
       ) : (
         <Link to="/login">login</Link>
       )}

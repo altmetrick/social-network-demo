@@ -15,7 +15,6 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.userData,
-        isAuth: true,
       };
 
     default:
@@ -25,9 +24,9 @@ const authReducer = (state = initialState, action) => {
 
 //Action Creators
 
-export const setAuthUserDataAC = (userId, email, login) => ({
+export const setAuthUserDataAC = (userId, email, login, isAuth) => ({
   type: SET_AUTH_USER_DATA,
-  userData: { userId, email, login },
+  userData: { userId, email, login, isAuth },
 });
 
 //ThunkCreators
@@ -38,7 +37,27 @@ export const authMeThC = () => {
         let { id, email, login } = data.data;
 
         console.log(data);
-        dispatch(setAuthUserDataAC(id, email, login));
+        dispatch(setAuthUserDataAC(id, email, login, true));
+      }
+    });
+  };
+};
+
+export const loginThC = (email, password, rememberMe) => {
+  return (dispatch) => {
+    authAPI.login(email, password, rememberMe).then((res) => {
+      if (res.data.resultCode === 0) {
+        dispatch(authMeThC());
+      }
+    });
+  };
+};
+
+export const logOutThC = () => {
+  return (dispatch) => {
+    authAPI.logOut().then((res) => {
+      if (res.data.resultCode === 0) {
+        dispatch(setAuthUserDataAC(null, null, null, false));
       }
     });
   };
