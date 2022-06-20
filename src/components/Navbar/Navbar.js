@@ -12,7 +12,7 @@ const Navbar = () => {
       </div>
 
       <div className={s.item}>
-        <Link to={`/profile/${defaultUserId}`}>Profile</Link>
+        <Link to={`/profile/${'myProfile'}`}>Profile</Link>
       </div>
 
       <div className={s.item}>

@@ -7,12 +7,14 @@ import profileReducer from './reducers/profile-reducer';
 import dialogsReducer from './reducers/dialogs-reducer';
 import usersReducer from './reducers/users-reducer';
 import authReducer from './reducers/auth-reducer';
+import appReducer from './reducers/app-reducer';
 
 const reducers = combineReducers({
   profilePage: profileReducer,
   dialogsPage: dialogsReducer,
   usersPage: usersReducer,
   authData: authReducer,
+  app: appReducer,
   form: formReducer,
 });
 

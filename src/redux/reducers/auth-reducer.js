@@ -1,3 +1,4 @@
+import { stopSubmit } from 'redux-form';
 import { authAPI } from '../../api/api';
 
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
@@ -30,9 +31,9 @@ export const setAuthUserDataAC = (userId, email, login, isAuth) => ({
 });
 
 //ThunkCreators
-export const authMeThC = () => {
+export const getAuthUserDataThC = () => {
   return (dispatch) => {
-    authAPI.authMe().then((data) => {
+    return authAPI.authMe().then((data) => {
       if (data.resultCode === 0) {
         let { id, email, login } = data.data;
 
@@ -47,7 +48,15 @@ export const loginThC = (email, password, rememberMe) => {
   return (dispatch) => {
     authAPI.login(email, password, rememberMe).then((res) => {
       if (res.data.resultCode === 0) {
-        dispatch(authMeThC());
+        dispatch(getAuthUserDataThC());
+      } else {
+        let action = stopSubmit('loginForm', {
+          _error:
+            res.data.messages.length > 0
+              ? res.data.messages[0]
+              : 'Email or Password is wrong!!!',
+        });
+        dispatch(action);
       }
     });
   };

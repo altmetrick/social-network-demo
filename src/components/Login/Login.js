@@ -1,3 +1,5 @@
+import s from './../common/FormControls/FormControls.module.css';
+
 import { Field, reduxForm, reset } from 'redux-form';
 import { FormControlWithInputTag } from '../common/FormControls/FormControls';
 import { connect } from 'react-redux';
@@ -37,6 +39,12 @@ const LoginForm = (props) => {
       <div>
         <button>Log In</button>
       </div>
+
+      {props.error && (
+        <div className={`${s.formControl} ${s.error}`}>
+          <span>{props.error}</span>
+        </div>
+      )}
     </form>
   );
 };
@@ -47,7 +55,7 @@ const Login = (props) => {
   const submit = (values, dispatch) => {
     const { email, password, rememberMe } = values;
     props.login(email, password, rememberMe);
-    dispatch(reset('loginForm'));
+    //dispatch(reset('loginForm'));
   };
 
   if (props.isAuth) {

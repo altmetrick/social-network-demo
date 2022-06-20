@@ -17,9 +17,15 @@ class ProfileContainer extends Component {
   componentDidMount() {
     let userId = this.props.params.userId;
 
-    this.props.getProfile(userId);
+    if (userId === 'myProfile') {
+      userId = this.props.authUserId;
+    }
 
-    this.props.getUserStatus(userId);
+    if (userId) {
+      this.props.getProfile(userId);
+
+      this.props.getUserStatus(userId);
+    }
   }
 
   render() {
@@ -42,9 +48,10 @@ let WithUrlParamsProfileContainer = (props) => {
 const mapStateToProps = (state) => ({
   userData: state.profilePage.userProfileData,
   userStatus: state.profilePage.userStatus,
+  authUserId: state.authData.userId,
 });
 
 export default compose(
   connect(mapStateToProps, { getProfile, getUserStatus, updateUserStatus })
-  // AuthRedirect
+  //AuthRedirect
 )(WithUrlParamsProfileContainer);
