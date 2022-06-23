@@ -45,11 +45,13 @@ let WithUrlParamsProfileContainer = (props) => {
   return <ProfileContainer {...props} params={params} />;
 };
 
-const mapStateToProps = (state) => ({
-  userData: state.profilePage.userProfileData,
-  userStatus: state.profilePage.userStatus,
-  authUserId: state.authData.userId,
-});
+const mapStateToProps = (state) => {
+  return {
+    userData: state.profilePage.userProfileData,
+    userStatus: state.profilePage.userStatus,
+    authUserId: state.authData.userId,
+  };
+};
 
 export default compose(
   connect(mapStateToProps, { getProfile, getUserStatus, updateUserStatus })

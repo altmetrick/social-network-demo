@@ -1,6 +1,7 @@
 import s from './Navbar.module.css';
 
 import { Link } from 'react-router-dom';
+import Timer from '../Timer/Timer';
 
 const Navbar = () => {
   let defaultUserId = 22896;
@@ -25,6 +26,10 @@ const Navbar = () => {
 
       <div className={s.item}>
         <Link to="/settings">Settings</Link>
+      </div>
+
+      <div className={s.item}>
+        <Link to="/timer">Timer</Link>
       </div>
     </div>
   );
