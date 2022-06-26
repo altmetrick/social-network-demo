@@ -4,6 +4,7 @@ const Timer = (props) => {
   const [isOn, setIsOn] = useState(false);
   const [timer, setTimer] = useState(0);
   console.log(timer, ' from Func');
+
   useEffect(() => {
     let interval;
 
