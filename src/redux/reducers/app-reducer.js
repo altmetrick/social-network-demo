@@ -1,6 +1,6 @@
 import { getAuthUserDataThC } from './auth-reducer';
 
-const SUCCESS_INITIALIZATION = 'SUCCESS_INITIALIZATION';
+const SUCCESS_INITIALIZATION = 'app/SUCCESS_INITIALIZATION';
 
 const initialState = {
   isInitialized: false,

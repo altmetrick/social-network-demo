@@ -1,9 +1,9 @@
 import { profileAPI } from '../../api/api';
 
-const ADD_POST = 'ADD_POST';
-const DELETE_POST = 'DELETE_POST';
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_USER_STATUS = 'SET_USER_STATUS';
+const ADD_POST = 'profile/ADD_POST';
+const DELETE_POST = 'profile/DELETE_POST';
+const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
+const SET_USER_STATUS = 'profile/SET_USER_STATUS';
 
 const initialState = {
   posts: [
@@ -71,28 +71,28 @@ export const setUserStatusAC = (text) => ({
 
 //Thunk Creators
 export const getProfileThC = (userId) => {
-  return (dispatch) => {
-    profileAPI.getProfileData(userId).then((data) => {
-      dispatch(setUserProfileAC(data));
-    });
+  return async (dispatch) => {
+    let data = await profileAPI.getProfileData(userId);
+
+    dispatch(setUserProfileAC(data));
   };
 };
 
 export const getUserStatusThC = (userId) => {
-  return (dispatch) => {
-    profileAPI.getStatus(userId).then((data) => {
-      dispatch(setUserStatusAC(data));
-    });
+  return async (dispatch) => {
+    let data = await profileAPI.getStatus(userId);
+
+    dispatch(setUserStatusAC(data));
   };
 };
 
 export const updateUserStatusThC = (statusText) => {
-  return (dispatch) => {
-    profileAPI.updateStatus(statusText).then((res) => {
-      if (res.data.resultCode === 0) {
-        dispatch(setUserStatusAC(statusText));
-      }
-    });
+  return async (dispatch) => {
+    let res = await profileAPI.updateStatus(statusText);
+
+    if (res.data.resultCode === 0) {
+      dispatch(setUserStatusAC(statusText));
+    }
   };
 };
 

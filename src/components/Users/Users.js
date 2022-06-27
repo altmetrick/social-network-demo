@@ -1,27 +1,9 @@
 import s from './Users.module.css';
-import userImage from './../../assets/images/User_default_avatar.png';
-import { Link } from 'react-router-dom';
+
+import Paginator from '../common/Paginator/Paginator';
+import User from './User/User';
 
 const Users = (props) => {
-  let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-
-  let pages = [];
-
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i);
-  }
-
-  let pagesEls = pages.map((page) => (
-    <span
-      className={page === props.currentPage ? s.selected : ' '}
-      onClick={() => {
-        props.onPageChanged(page);
-      }}
-    >
-      {page}
-    </span>
-  ));
-
   const followUser = (userId) => {
     props.follow(userId);
   };
@@ -31,38 +13,18 @@ const Users = (props) => {
   };
 
   let usersEls = props.users.map((user) => (
-    <div key={user.id} className={s.userWrapper}>
-      <div>
-        <div>
-          <Link to={`/profile/${user.id}`}>
-            <img
-              src={user.photos.small === null ? userImage : user.photos.small}
-            />
-          </Link>
-        </div>
-
-        <div>
-          <button
-            disabled={props.followingProgress.some((id) => id === user.id)}
-            onClick={() => {
-              user.followed ? unFollowUser(user.id) : followUser(user.id);
-            }}
-          >
-            {user.followed ? 'Unfollow' : 'Follow'}
-          </button>
-        </div>
-      </div>
-
-      <div className={s.userBio}>
-        <h3>{user.name}</h3>
-        <h4>location: ---</h4>
-      </div>
-    </div>
+    <User
+      key={user.id}
+      user={user}
+      followingProgress={props.followingProgress}
+      followUser={followUser}
+      unFollowUser={unFollowUser}
+    />
   ));
 
   return (
     <div>
-      {pagesEls}
+      <Paginator {...props} />
       <h3>Users</h3>
       {usersEls}
     </div>
