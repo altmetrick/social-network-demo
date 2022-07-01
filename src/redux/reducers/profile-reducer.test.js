@@ -15,7 +15,7 @@ const initialState = {
 describe('Users Reducers', () => {
   test('The length of posts should be incremented', () => {
     let res = profileReducer(initialState, {
-      type: 'ADD_POST',
+      type: 'profile/ADD_POST',
       postText: 'hello',
     });
 

@@ -1,5 +1,5 @@
 import { combineReducers, legacy_createStore as createStore } from 'redux';
-import { applyMiddleware } from 'redux';
+import { applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 
@@ -18,7 +18,10 @@ const reducers = combineReducers({
   form: formReducer,
 });
 
-const store = createStore(reducers, applyMiddleware(thunk));
+//const store = createStore(reducers, applyMiddleware(thunk));
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 
 window.store = store;
 
