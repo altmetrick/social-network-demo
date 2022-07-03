@@ -24,7 +24,7 @@ const Users = (props) => {
 
   return (
     <div>
-      <Paginator {...props} />
+      <Paginator {...props} totalItemsCount={props.totalUsersCount} />
       <h3>Users</h3>
       {usersEls}
     </div>
