@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import './App.css';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -9,10 +9,17 @@ import Timer from './components/Timer/Timer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import Login from './components/Login/Login';
-import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
+//import UsersContainer from './components/Users/UsersContainer';
+//import ProfileContainer from './components/Profile/ProfileContainer';
 import Dialogs from './components/Dialogs/Dialogs';
 import Preloader from './components/common/Preloader/Preloader';
+
+const UsersContainer = React.lazy(() =>
+  import('./components/Users/UsersContainer')
+);
+const ProfileContainer = React.lazy(() =>
+  import('./components/Profile/ProfileContainer')
+);
 
 class App extends React.Component {
   componentDidMount() {
@@ -30,14 +37,16 @@ class App extends React.Component {
           <HeaderContainer />
           <Navbar />
           <div className="appContentWrapper">
-            <Routes>
-              <Route path="/login" element={<Login />} />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Routes>
+                <Route path="/login" element={<Login />} />
 
-              <Route path="/users" element={<UsersContainer />} />
-              <Route path="/profile/:userId" element={<ProfileContainer />} />
-              <Route path="/dialogs/*" element={<Dialogs />} />
-              <Route path="/timer/" element={<Timer />} />
-            </Routes>
+                <Route path="/users" element={<UsersContainer />} />
+                <Route path="/profile/:userId" element={<ProfileContainer />} />
+                <Route path="/dialogs/*" element={<Dialogs />} />
+                <Route path="/timer/" element={<Timer />} />
+              </Routes>
+            </Suspense>
           </div>
         </div>
       </BrowserRouter>
