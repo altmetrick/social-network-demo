@@ -14,7 +14,7 @@ import {
 } from '../../redux/reducers/profile-reducer';
 
 class ProfileContainer extends Component {
-  componentDidMount() {
+  refreshProfile() {
     let userId = this.props.params.userId;
 
     if (userId === 'myProfile') {
@@ -25,6 +25,18 @@ class ProfileContainer extends Component {
       this.props.getProfile(userId);
 
       this.props.getUserStatus(userId);
+    }
+  }
+
+  componentDidMount() {
+    this.refreshProfile();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('profile comp did upd');
+    if (prevProps.params.userId !== this.props.params.userId) {
+      debugger;
+      this.refreshProfile();
     }
   }
 

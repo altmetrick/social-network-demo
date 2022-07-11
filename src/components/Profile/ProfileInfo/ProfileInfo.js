@@ -1,4 +1,5 @@
 import s from './ProfileInfo.module.css';
+import defPhoto from './../../../assets/images/User_default_avatar.png';
 
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 
@@ -8,7 +9,14 @@ const ProfileInfo = (props) => {
       <h3>Profile Info</h3>
       <div>
         <div>
-          <img src={props.userData.photos.large} />
+          <img
+            className={s.mainPhoto}
+            src={`${
+              props.userData.photos.large
+                ? props.userData.photos.large
+                : defPhoto
+            }`}
+          />
         </div>
 
         <div className={s.descriptionBlock}>

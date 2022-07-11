@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import './App.css';
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { initAppThC as initApp } from './redux/reducers/app-reducer';
 
@@ -32,7 +32,7 @@ class App extends React.Component {
     }
 
     return (
-      <BrowserRouter>
+      <HashRouter>
         <div className="appWrapper">
           <HeaderContainer />
           <Navbar />
@@ -49,7 +49,7 @@ class App extends React.Component {
             </Suspense>
           </div>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }

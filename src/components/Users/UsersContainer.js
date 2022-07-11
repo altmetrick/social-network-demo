@@ -1,6 +1,4 @@
 import React from 'react';
-import axios from 'axios';
-import { usersAPI } from '../../api/api';
 
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
