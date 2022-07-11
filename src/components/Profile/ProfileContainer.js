@@ -11,6 +11,7 @@ import {
   getProfileThC as getProfile,
   getUserStatusThC as getUserStatus,
   updateUserStatusThC as updateUserStatus,
+  saveImageThC as saveImage,
 } from '../../redux/reducers/profile-reducer';
 
 class ProfileContainer extends Component {
@@ -35,7 +36,6 @@ class ProfileContainer extends Component {
   componentDidUpdate(prevProps, prevState) {
     console.log('profile comp did upd');
     if (prevProps.params.userId !== this.props.params.userId) {
-      debugger;
       this.refreshProfile();
     }
   }
@@ -43,6 +43,16 @@ class ProfileContainer extends Component {
   render() {
     return (
       <Profile
+        isOwner={
+          (this.props.authUserId && this.props.params.userId === 'myProfile') ||
+          (this.props.authUserId &&
+            this.props.params.userId == this.props.authUserId)
+            ? true
+            : false
+        }
+        saveImage={this.props.saveImage}
+        isUploading={this.props.isUploading}
+        //
         userData={this.props.userData}
         userStatus={this.props.userStatus}
         updateUserStatus={this.props.updateUserStatus}
@@ -61,11 +71,17 @@ const mapStateToProps = (state) => {
   return {
     userData: state.profilePage.userProfileData,
     userStatus: state.profilePage.userStatus,
+    isUploading: state.profilePage.isUploadingImg,
     authUserId: state.authData.userId,
   };
 };
 
 export default compose(
-  connect(mapStateToProps, { getProfile, getUserStatus, updateUserStatus })
+  connect(mapStateToProps, {
+    getProfile,
+    getUserStatus,
+    updateUserStatus,
+    saveImage,
+  })
   //AuthRedirect
 )(WithUrlParamsProfileContainer);

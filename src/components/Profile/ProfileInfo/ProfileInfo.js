@@ -1,23 +1,34 @@
 import s from './ProfileInfo.module.css';
 import defPhoto from './../../../assets/images/User_default_avatar.png';
 
+import Preloader from '../../common/Preloader/Preloader';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 
 const ProfileInfo = (props) => {
+  const onImageChange = (e) => {
+    const imageFile = e.target.files[0];
+    props.saveImage(imageFile);
+  };
+
   return (
     <div className={s.profileInfoWrapper}>
       <h3>Profile Info</h3>
       <div>
-        <div>
-          <img
-            className={s.mainPhoto}
-            src={`${
-              props.userData.photos.large
-                ? props.userData.photos.large
-                : defPhoto
-            }`}
-          />
-        </div>
+        {props.isUploading ? (
+          <Preloader />
+        ) : (
+          <div>
+            <img
+              className={s.mainPhoto}
+              src={`${
+                props.userData.photos.large
+                  ? props.userData.photos.large
+                  : defPhoto
+              }`}
+            />
+            {props.isOwner && <input type="file" onChange={onImageChange} />}
+          </div>
+        )}
 
         <div className={s.descriptionBlock}>
           <div>

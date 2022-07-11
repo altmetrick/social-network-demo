@@ -4,6 +4,8 @@ const ADD_POST = 'profile/ADD_POST';
 const DELETE_POST = 'profile/DELETE_POST';
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
 const SET_USER_STATUS = 'profile/SET_USER_STATUS';
+const SAVE_IMAGE_SUCCESS = 'profile/SAVE_IMAGE_SUCCESS';
+const TOGGLE_IS_UPLOADING_IMG = 'profile/TOGGLE_IS_UPLOADING_IMG';
 
 const initialState = {
   posts: [
@@ -14,6 +16,7 @@ const initialState = {
   ],
   userProfileData: null,
   userStatus: '',
+  isUploadingImg: false,
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -48,6 +51,18 @@ const profileReducer = (state = initialState, action) => {
         userStatus: action.text,
       };
 
+    case SAVE_IMAGE_SUCCESS:
+      return {
+        ...state,
+        userProfileData: { ...state.userProfileData, photos: action.photosUrl },
+      };
+
+    case TOGGLE_IS_UPLOADING_IMG:
+      return {
+        ...state,
+        isUploadingImg: action.isUploading,
+      };
+
     default:
       return state;
   }
@@ -67,6 +82,16 @@ export const setUserProfileAC = (user) => ({
 export const setUserStatusAC = (text) => ({
   type: SET_USER_STATUS,
   text,
+});
+
+export const saveImageSuccessAC = (photosUrl) => ({
+  type: SAVE_IMAGE_SUCCESS,
+  photosUrl,
+});
+
+export const toggleIsUploadingImgAC = (isUploading) => ({
+  type: TOGGLE_IS_UPLOADING_IMG,
+  isUploading,
 });
 
 //Thunk Creators
@@ -93,6 +118,18 @@ export const updateUserStatusThC = (statusText) => {
     if (res.data.resultCode === 0) {
       dispatch(setUserStatusAC(statusText));
     }
+  };
+};
+
+export const saveImageThC = (imageFile) => {
+  return async (dispatch) => {
+    dispatch(toggleIsUploadingImgAC(true));
+    let res = await profileAPI.saveImage(imageFile);
+
+    if (res.data.resultCode === 0) {
+      dispatch(saveImageSuccessAC(res.data.data.photos));
+    }
+    dispatch(toggleIsUploadingImgAC(false));
   };
 };
 

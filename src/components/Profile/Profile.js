@@ -5,11 +5,16 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 const Profile = (props) => {
+  console.log(props.isOwner);
   return (
     <div>
       <h2>Profile</h2>
       {props.userData ? (
         <ProfileInfo
+          isOwner={props.isOwner}
+          saveImage={props.saveImage}
+          isUploading={props.isUploading}
+          //
           userData={props.userData}
           userStatus={props.userStatus}
           updateUserStatus={props.updateUserStatus}
