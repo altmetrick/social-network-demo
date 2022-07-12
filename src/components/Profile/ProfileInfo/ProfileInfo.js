@@ -17,7 +17,7 @@ const ProfileInfo = (props) => {
         {props.isUploading ? (
           <Preloader />
         ) : (
-          <div>
+          <div className={s.imageWrapper}>
             <img
               className={s.mainPhoto}
               src={`${
@@ -26,7 +26,17 @@ const ProfileInfo = (props) => {
                   : defPhoto
               }`}
             />
-            {props.isOwner && <input type="file" onChange={onImageChange} />}
+            {props.isOwner && (
+              <label htmlFor="chooseImg" className={s.selectImgBtn}>
+                Select Image
+                <input
+                  id="chooseImg"
+                  type="file"
+                  onChange={onImageChange}
+                  accept="image/png, image/jpg, image/gif, image/jpeg"
+                />
+              </label>
+            )}
           </div>
         )}
 

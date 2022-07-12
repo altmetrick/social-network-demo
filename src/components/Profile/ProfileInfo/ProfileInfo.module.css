@@ -8,6 +8,44 @@
   padding: 10px;
 }
 
+.imageWrapper {
+  position: relative;
+  width: 250px;
+  height: 250px;
+}
+
 .mainPhoto {
-  width: 200px;
+  width: 250px;
+}
+
+.selectImgBtn {
+  cursor: pointer;
+
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+
+  background-color: rgba(211, 231, 249, 0.815);
+  border: solid 1px rgba(0, 0, 0, 0.38);
+  padding: 10px 15px;
+  border-radius: 100px;
+
+  position: absolute;
+  width: 150px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.selectImgBtn input {
+  display: none;
+}
+
+.imageWrapper:hover .selectImgBtn {
+  opacity: 1;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
