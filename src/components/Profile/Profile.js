@@ -12,6 +12,7 @@ const Profile = (props) => {
       {props.userData ? (
         <ProfileInfo
           isOwner={props.isOwner}
+          saveProfile={props.saveProfile}
           saveImage={props.saveImage}
           isUploading={props.isUploading}
           //

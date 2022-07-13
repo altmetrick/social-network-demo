@@ -15,8 +15,17 @@ const ProfileInfo = (props) => {
     const imageFile = e.target.files[0];
     props.saveImage(imageFile);
   };
-  console.log('PROF DATA:', props.userData);
 
+  const onFormSubmit = (formData) => {
+    console.log('FORM DATA', formData);
+
+    let prom = props.saveProfile(formData);
+    debugger;
+    prom.then(() => {
+      setEditMode(false);
+    });
+    console.log('PROF DATA:', props.userData);
+  };
   return (
     <div className={s.profileInfoWrapper}>
       <h3>Profile Info</h3>
@@ -59,12 +68,15 @@ const ProfileInfo = (props) => {
         />
         <div>User Id: {props.userData.userId}</div>
 
-        {props.isOwner && (
-          <button onClick={() => setEditMode(!editMode)}>Edit Profile</button>
+        {props.isOwner && !editMode && (
+          <button onClick={() => setEditMode(true)}>Edit Profile</button>
         )}
 
         {editMode ? (
-          <ProfileDataForm userData={props.userData} />
+          <ProfileDataForm
+            userData={props.userData}
+            onFormSubmit={onFormSubmit}
+          />
         ) : (
           <ProfileData userData={props.userData} />
         )}

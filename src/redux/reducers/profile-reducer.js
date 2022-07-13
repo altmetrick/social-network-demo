@@ -1,4 +1,6 @@
 import { profileAPI } from '../../api/api';
+import { stopSubmit } from 'redux-form';
+import { matchKeysToMessages } from '../../utilities/helpers/helpers';
 
 const ADD_POST = 'profile/ADD_POST';
 const DELETE_POST = 'profile/DELETE_POST';
@@ -130,6 +132,28 @@ export const saveImageThC = (imageFile) => {
       dispatch(saveImageSuccessAC(res.data.data.photos));
     }
     dispatch(toggleIsUploadingImgAC(false));
+  };
+};
+
+export const saveProfileThC = (profileData) => {
+  return async (dispatch, getState) => {
+    const res = await profileAPI.saveProfile(profileData);
+
+    const state = getState();
+    const contacts = state.profilePage.userProfileData.contacts;
+
+    debugger;
+    if (res.data.resultCode === 0) {
+      dispatch(getProfileThC(state.authData.userId));
+    } else {
+      let action = stopSubmit('profileDataForm', {
+        contacts: matchKeysToMessages(contacts, res.data.messages),
+        _error: 'Invalid links',
+      });
+
+      dispatch(action);
+      throw 'Parameter is not a number!';
+    }
   };
 };
 

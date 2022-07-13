@@ -1,3 +1,5 @@
+import s from './../ProfileInfo.module.css';
+
 import { reduxForm, Field } from 'redux-form';
 import { FormControlWithInputTag } from '../../../common/FormControls/FormControls';
 
@@ -34,7 +36,7 @@ const ProfileFormRedux = (props) => {
       </div>
 
       <div>
-        Skills :{' '}
+        Skills :
         <Field
           name="lookingForAJobDescription"
           component={FormControlWithInputTag}
@@ -43,6 +45,28 @@ const ProfileFormRedux = (props) => {
           placeholder="your skills"
         />
       </div>
+      <div>
+        <h3>Contacts</h3>
+        {Object.keys(props.userData.contacts).map((key) => {
+          return (
+            <div key={key}>
+              {key}:
+              <Field
+                name={`contacts.${key}`}
+                component={FormControlWithInputTag}
+                inputTag={'input'}
+                type="text"
+              />
+            </div>
+          );
+        })}
+        <br />
+      </div>
+      {props.error && (
+        <div className={`${s.formControl} ${s.error}`}>
+          <span>{props.error}</span>
+        </div>
+      )}
     </form>
   );
 };
@@ -52,12 +76,12 @@ const ProfileDataReduxForm = reduxForm({ form: 'profileDataForm' })(
 );
 
 const ProfileDataForm = (props) => {
-  const submit = (formData) => {
-    console.log('FORM DATA', formData);
-  };
-
   return (
-    <ProfileDataReduxForm onSubmit={submit} initialValues={props.userData} />
+    <ProfileDataReduxForm
+      onSubmit={props.onFormSubmit}
+      initialValues={props.userData}
+      userData={props.userData}
+    />
   );
 };
 

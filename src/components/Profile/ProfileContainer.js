@@ -12,6 +12,7 @@ import {
   getUserStatusThC as getUserStatus,
   updateUserStatusThC as updateUserStatus,
   saveImageThC as saveImage,
+  saveProfileThC as saveProfile,
 } from '../../redux/reducers/profile-reducer';
 
 class ProfileContainer extends Component {
@@ -50,6 +51,7 @@ class ProfileContainer extends Component {
             ? true
             : false
         }
+        saveProfile={this.props.saveProfile}
         saveImage={this.props.saveImage}
         isUploading={this.props.isUploading}
         //
@@ -82,6 +84,7 @@ export default compose(
     getUserStatus,
     updateUserStatus,
     saveImage,
+    saveProfile,
   })
   //AuthRedirect
 )(WithUrlParamsProfileContainer);
