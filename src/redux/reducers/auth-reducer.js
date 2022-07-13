@@ -65,6 +65,7 @@ export const loginThC = (email, password, rememberMe) => {
       dispatch(getAuthUserDataThC());
     } else {
       let action = stopSubmit('loginForm', {
+        email: 'wrong email bro',
         _error:
           res.data.messages.length > 0
             ? res.data.messages[0]

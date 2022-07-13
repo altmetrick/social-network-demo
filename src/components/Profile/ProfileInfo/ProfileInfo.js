@@ -1,19 +1,27 @@
 import s from './ProfileInfo.module.css';
 import defPhoto from './../../../assets/images/User_default_avatar.png';
 
+import { useState } from 'react';
+
 import Preloader from '../../common/Preloader/Preloader';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
+import ProfileData from './ProfileData/ProfileData';
+import ProfileDataForm from './ProfileDataForm/ProfileDataForm';
 
 const ProfileInfo = (props) => {
+  const [editMode, setEditMode] = useState(false);
+
   const onImageChange = (e) => {
     const imageFile = e.target.files[0];
     props.saveImage(imageFile);
   };
+  console.log('PROF DATA:', props.userData);
 
   return (
     <div className={s.profileInfoWrapper}>
       <h3>Profile Info</h3>
-      <div>
+
+      <div className={s.imageBlock}>
         {props.isUploading ? (
           <Preloader />
         ) : (
@@ -39,18 +47,27 @@ const ProfileInfo = (props) => {
             )}
           </div>
         )}
+      </div>
 
-        <div className={s.descriptionBlock}>
-          <div>
-            <h4>{props.userData.fullName}</h4>
-          </div>
-          <ProfileStatus
-            userStatus={props.userStatus}
-            updateUserStatus={props.updateUserStatus}
-          />
-          <div>{props.userData.aboutMe}</div>
-          <div>User Id: {props.userData.userId}</div>
+      <div className={s.descriptionBlock}>
+        <div>
+          <h4>{props.userData.fullName}</h4>
         </div>
+        <ProfileStatus
+          userStatus={props.userStatus}
+          updateUserStatus={props.updateUserStatus}
+        />
+        <div>User Id: {props.userData.userId}</div>
+
+        {props.isOwner && (
+          <button onClick={() => setEditMode(!editMode)}>Edit Profile</button>
+        )}
+
+        {editMode ? (
+          <ProfileDataForm userData={props.userData} />
+        ) : (
+          <ProfileData userData={props.userData} />
+        )}
       </div>
     </div>
   );

@@ -108,8 +108,8 @@ export const getUsersThC = (pageSize, currentPage) => {
     let data = await usersAPI.getUsers(pageSize, currentPage);
 
     dispatch(setUsersAC(data.items));
-    //dispatch(setTotalUsersCount(data.totalCount));
-    dispatch(setTotalUsersCountAC(300));
+    dispatch(setTotalUsersCountAC(data.totalCount));
+
     dispatch(toggleIsFetchingAC(false));
   };
 };

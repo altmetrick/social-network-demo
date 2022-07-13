@@ -34,7 +34,7 @@ AddPostForm = reduxForm({
 
 const MyPosts = (props) => {
   const postsEls = props.posts.map((p) => (
-    <Post id={p.id} message={p.text} likes={p.likes} />
+    <Post key={p.id} id={p.id} message={p.text} likes={p.likes} />
   ));
 
   const submit = (values, dispatch) => {
