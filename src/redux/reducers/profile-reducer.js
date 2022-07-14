@@ -142,17 +142,15 @@ export const saveProfileThC = (profileData) => {
     const state = getState();
     const contacts = state.profilePage.userProfileData.contacts;
 
-    debugger;
     if (res.data.resultCode === 0) {
       dispatch(getProfileThC(state.authData.userId));
     } else {
       let action = stopSubmit('profileDataForm', {
         contacts: matchKeysToMessages(contacts, res.data.messages),
-        _error: 'Invalid links',
+        //_error: 'Invalid links',
       });
-
       dispatch(action);
-      throw 'Parameter is not a number!';
+      return Promise.reject('Invalid fields data');
     }
   };
 };

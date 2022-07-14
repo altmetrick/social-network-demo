@@ -17,15 +17,11 @@ const ProfileInfo = (props) => {
   };
 
   const onFormSubmit = (formData) => {
-    console.log('FORM DATA', formData);
-
-    let prom = props.saveProfile(formData);
-    debugger;
-    prom.then(() => {
+    props.saveProfile(formData).then(() => {
       setEditMode(false);
     });
-    console.log('PROF DATA:', props.userData);
   };
+
   return (
     <div className={s.profileInfoWrapper}>
       <h3>Profile Info</h3>
@@ -74,8 +70,9 @@ const ProfileInfo = (props) => {
 
         {editMode ? (
           <ProfileDataForm
+            initialValues={props.userData}
             userData={props.userData}
-            onFormSubmit={onFormSubmit}
+            onSubmit={onFormSubmit}
           />
         ) : (
           <ProfileData userData={props.userData} />

@@ -71,18 +71,8 @@ const ProfileFormRedux = (props) => {
   );
 };
 
-const ProfileDataReduxForm = reduxForm({ form: 'profileDataForm' })(
+const ProfileDataForm = reduxForm({ form: 'profileDataForm' })(
   ProfileFormRedux
 );
-
-const ProfileDataForm = (props) => {
-  return (
-    <ProfileDataReduxForm
-      onSubmit={props.onFormSubmit}
-      initialValues={props.userData}
-      userData={props.userData}
-    />
-  );
-};
 
 export default ProfileDataForm;
