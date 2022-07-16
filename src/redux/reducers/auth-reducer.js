@@ -1,13 +1,15 @@
 import { stopSubmit } from 'redux-form';
-import { authAPI } from '../../api/api';
+import { authAPI, securityAPI } from '../../api/api';
 
 const SET_AUTH_USER_DATA = 'auth/SET_AUTH_USER_DATA';
+const GET_CAPTCHA_URL_SUCCESS = 'auth/GET_CAPTCHA_URL_SUCCESS';
 
 const initialState = {
   userId: null,
   email: null,
   login: null,
   isAuth: false,
+  captchaUrl: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -18,16 +20,26 @@ const authReducer = (state = initialState, action) => {
         ...action.userData,
       };
 
+    case GET_CAPTCHA_URL_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+
     default:
       return state;
   }
 };
 
 //Action Creators
-
 export const setAuthUserDataAC = (userId, email, login, isAuth) => ({
   type: SET_AUTH_USER_DATA,
   userData: { userId, email, login, isAuth },
+});
+
+export const getCaptchaUrlAC = (captchaUrl) => ({
+  type: GET_CAPTCHA_URL_SUCCESS,
+  payload: { captchaUrl },
 });
 
 //ThunkCreators
@@ -57,13 +69,18 @@ export const getAuthUserDataThC = () => {
   // };
 };
 
-export const loginThC = (email, password, rememberMe) => {
+export const loginThC = (email, password, rememberMe, captcha) => {
   return async (dispatch) => {
-    let res = await authAPI.login(email, password, rememberMe);
+    let res = await authAPI.login(email, password, rememberMe, captcha);
 
     if (res.data.resultCode === 0) {
       dispatch(getAuthUserDataThC());
     } else {
+      if (res.data.resultCode === 10) {
+        let res = await securityAPI.getCaptchaUrl();
+        dispatch(getCaptchaUrlAC(res.data.url));
+      }
+
       let action = stopSubmit('loginForm', {
         _error:
           res.data.messages.length > 0
