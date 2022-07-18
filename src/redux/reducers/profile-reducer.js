@@ -115,10 +115,14 @@ export const getUserStatusThC = (userId) => {
 
 export const updateUserStatusThC = (statusText) => {
   return async (dispatch) => {
-    let res = await profileAPI.updateStatus(statusText);
+    try {
+      let res = await profileAPI.updateStatus(statusText);
 
-    if (res.data.resultCode === 0) {
-      dispatch(setUserStatusAC(statusText));
+      if (res.data.resultCode === 0) {
+        dispatch(setUserStatusAC(statusText));
+      }
+    } catch (error) {
+      debugger;
     }
   };
 };

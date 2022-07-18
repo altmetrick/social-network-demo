@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import './App.css';
 
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { initAppThC as initApp } from './redux/reducers/app-reducer';
 
@@ -22,8 +22,22 @@ const ProfileContainer = React.lazy(() =>
 );
 
 class App extends React.Component {
+  catchAllUnhandledErrors = (reason, e) => {
+    console.log(reason);
+    alert('Some error has ocurred');
+  };
+
   componentDidMount() {
     this.props.initApp();
+
+    window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener(
+      'unhandledrejection',
+      this.catchAllUnhandledErrors
+    );
   }
 
   render() {
@@ -41,6 +55,10 @@ class App extends React.Component {
               <Routes>
                 <Route path="/login" element={<Login />} />
 
+                <Route
+                  path="/"
+                  element={<Navigate to="/profile/myProfile" />}
+                />
                 <Route path="/users" element={<UsersContainer />} />
                 <Route path="/profile/:userId" element={<ProfileContainer />} />
                 <Route path="/dialogs/*" element={<Dialogs />} />
