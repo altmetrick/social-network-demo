@@ -122,7 +122,7 @@ export const updateUserStatusThC = (statusText) => {
         dispatch(setUserStatusAC(statusText));
       }
     } catch (error) {
-      debugger;
+      console.log('Error');
     }
   };
 };

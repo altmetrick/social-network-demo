@@ -37,11 +37,11 @@ AddMessageForm = reduxForm({ form: 'dialogsAddMessageForm' })(AddMessageForm);
 
 const Dialogs = (props) => {
   const dialogsEls = props.dialogs.map((item) => (
-    <DialogItem name={item.name} id={item.id} />
+    <DialogItem name={item.name} id={item.id} key={item.id} />
   ));
 
   const messagesEls = props.messages.map((item) => (
-    <Message text={item.text} id={item.id} />
+    <Message text={item.text} id={item.id} key={item.id} />
   ));
 
   const submit = (values, dispatch) => {

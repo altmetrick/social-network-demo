@@ -9,17 +9,17 @@ import Timer from './components/Timer/Timer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import Login from './components/Login/Login';
-//import UsersContainer from './components/Users/UsersContainer';
-//import ProfileContainer from './components/Profile/ProfileContainer';
+import UsersContainer from './components/Users/UsersContainer';
+import ProfileContainer from './components/Profile/ProfileContainer';
 import Dialogs from './components/Dialogs/Dialogs';
 import Preloader from './components/common/Preloader/Preloader';
 
-const UsersContainer = React.lazy(() =>
-  import('./components/Users/UsersContainer')
-);
-const ProfileContainer = React.lazy(() =>
-  import('./components/Profile/ProfileContainer')
-);
+// const UsersContainer = React.lazy(() =>
+//   import('./components/Users/UsersContainer')
+// );
+// const ProfileContainer = React.lazy(() =>
+//   import('./components/Profile/ProfileContainer')
+// );
 
 class App extends React.Component {
   catchAllUnhandledErrors = (reason, e) => {
@@ -30,7 +30,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.initApp();
 
-    window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors);
+    //window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors);
   }
 
   componentWillUnmount() {
