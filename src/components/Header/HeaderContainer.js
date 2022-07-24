@@ -3,7 +3,7 @@ import { Component } from 'react';
 import Header from './Header';
 
 import { connect } from 'react-redux';
-import { logOutThC as logOut } from '../../redux/reducers/auth-reducer';
+import { logOutThC as logOut } from '../../redux/reducers/auth-reducer.ts';
 
 class HeaderContainer extends Component {
   render() {

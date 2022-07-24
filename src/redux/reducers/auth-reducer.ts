@@ -5,19 +5,22 @@ const SET_AUTH_USER_DATA = 'auth/SET_AUTH_USER_DATA';
 const GET_CAPTCHA_URL_SUCCESS = 'auth/GET_CAPTCHA_URL_SUCCESS';
 
 const initialState = {
-  userId: null,
-  email: null,
-  login: null,
+  userId: null as number | null,
+  email: null as string | null,
+  login: null as string | null,
   isAuth: false,
-  captchaUrl: null,
+  captchaUrl: null as string | null,
 };
 
-const authReducer = (state = initialState, action) => {
+type State = typeof initialState;
+
+const authReducer = (state = initialState, action: any): State => {
   switch (action.type) {
     case SET_AUTH_USER_DATA:
       return {
         ...state,
-        ...action.userData,
+        userId: 'io',
+        ...action.payload,
       };
 
     case GET_CAPTCHA_URL_SUCCESS:
@@ -32,12 +35,32 @@ const authReducer = (state = initialState, action) => {
 };
 
 //Action Creators
-export const setAuthUserDataAC = (userId, email, login, isAuth) => ({
+type setAuthUserDataAT = {
+  type: typeof SET_AUTH_USER_DATA;
+  payload: {
+    userId: number | null;
+    email: string | null;
+    login: string | null;
+    isAuth: boolean;
+  };
+};
+
+export const setAuthUserDataAC = (
+  userId: number | null,
+  email: string | null,
+  login: string | null,
+  isAuth: boolean
+): setAuthUserDataAT => ({
   type: SET_AUTH_USER_DATA,
-  userData: { userId, email, login, isAuth },
+  payload: { userId, email, login, isAuth },
 });
 
-export const getCaptchaUrlAC = (captchaUrl) => ({
+type getCaptchaUrlAT = {
+  type: typeof GET_CAPTCHA_URL_SUCCESS;
+  payload: { captchaUrl: string };
+};
+
+export const getCaptchaUrlAC = (captchaUrl: string): getCaptchaUrlAT => ({
   type: GET_CAPTCHA_URL_SUCCESS,
   payload: { captchaUrl },
 });

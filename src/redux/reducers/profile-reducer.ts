@@ -9,19 +9,50 @@ const SET_USER_STATUS = 'profile/SET_USER_STATUS';
 const SAVE_IMAGE_SUCCESS = 'profile/SAVE_IMAGE_SUCCESS';
 const TOGGLE_IS_UPLOADING_IMG = 'profile/TOGGLE_IS_UPLOADING_IMG';
 
+type PostT = {
+  id: string;
+  text: string;
+  likes: number;
+};
+type ContactsT = {
+  github: string | null;
+  vk: string | null;
+  facebook: string | null;
+  instagram: string | null;
+  twitter: string | null;
+  website: string | null;
+  youtube: string | null;
+  mainLink: string | null;
+};
+type PhotosT = {
+  small: string | null;
+  large: string | null;
+};
+
+type UserDataT = {
+  userId: number;
+  lookingForAJob: boolean;
+  lookingForAJobDescription: string;
+  fullName: string;
+  contacts: ContactsT;
+  photos: PhotosT;
+};
+
 const initialState = {
   posts: [
     { id: '1', text: 'My first post', likes: 1 },
     { id: '2', text: "What's up, man, today...", likes: 12 },
     { id: '3', text: 'Jack of all trades master of none', likes: 13 },
     { id: '4', text: 'Lorem ipsum Ola ', likes: 16 },
-  ],
-  userProfileData: null,
+  ] as Array<PostT>,
+  userProfileData: null as UserDataT | null,
   userStatus: '',
   isUploadingImg: false,
 };
 
-const profileReducer = (state = initialState, action) => {
+type StateT = typeof initialState;
+
+const profileReducer = (state = initialState, action: any): StateT => {
   switch (action.type) {
     case ADD_POST:
       let post = {
@@ -56,7 +87,10 @@ const profileReducer = (state = initialState, action) => {
     case SAVE_IMAGE_SUCCESS:
       return {
         ...state,
-        userProfileData: { ...state.userProfileData, photos: action.photosUrl },
+        userProfileData: {
+          ...state.userProfileData,
+          photos: action.photosUrl,
+        } as UserDataT,
       };
 
     case TOGGLE_IS_UPLOADING_IMG:
@@ -71,27 +105,58 @@ const profileReducer = (state = initialState, action) => {
 };
 
 //Action Creators
+type addPostAT = {
+  type: typeof ADD_POST;
+  postText: string;
+};
+export const addPostAC = (postText: string): addPostAT => ({
+  type: ADD_POST,
+  postText,
+});
 
-export const addPostAC = (postText) => ({ type: ADD_POST, postText });
-
-export const deletePostAC = (postId) => ({ type: DELETE_POST, postId });
+type deletePostAT = {
+  type: typeof DELETE_POST;
+  postId: number;
+};
+export const deletePostAC = (postId: number): deletePostAT => ({
+  type: DELETE_POST,
+  postId,
+});
 //
-export const setUserProfileAC = (user) => ({
+type setUserProfileAT = {
+  type: typeof SET_USER_PROFILE;
+  user: UserDataT;
+};
+export const setUserProfileAC = (user: UserDataT): setUserProfileAT => ({
   type: SET_USER_PROFILE,
   user,
 });
 
-export const setUserStatusAC = (text) => ({
+type setUserStatusAT = {
+  type: typeof SET_USER_STATUS;
+  text: string;
+};
+export const setUserStatusAC = (text: string): setUserStatusAT => ({
   type: SET_USER_STATUS,
   text,
 });
 
-export const saveImageSuccessAC = (photosUrl) => ({
+type saveImageSuccessAT = {
+  type: typeof SAVE_IMAGE_SUCCESS;
+  photosUrl: PhotosT;
+};
+export const saveImageSuccessAC = (photosUrl: any): saveImageSuccessAT => ({
   type: SAVE_IMAGE_SUCCESS,
   photosUrl,
 });
 
-export const toggleIsUploadingImgAC = (isUploading) => ({
+type toggleIsUploadingImgAT = {
+  type: typeof TOGGLE_IS_UPLOADING_IMG;
+  isUploading: boolean;
+};
+export const toggleIsUploadingImgAC = (
+  isUploading: boolean
+): toggleIsUploadingImgAT => ({
   type: TOGGLE_IS_UPLOADING_IMG,
   isUploading,
 });

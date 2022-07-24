@@ -13,7 +13,7 @@ import {
   updateUserStatusThC as updateUserStatus,
   saveImageThC as saveImage,
   saveProfileThC as saveProfile,
-} from '../../redux/reducers/profile-reducer';
+} from '../../redux/reducers/profile-reducer.ts';
 
 class ProfileContainer extends Component {
   refreshProfile() {

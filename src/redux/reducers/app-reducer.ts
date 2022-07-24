@@ -6,7 +6,9 @@ const initialState = {
   isInitialized: false,
 };
 
-const appReducer = (state = initialState, action) => {
+type State = typeof initialState;
+
+const appReducer = (state = initialState, action: any): State => {
   switch (action.type) {
     case SUCCESS_INITIALIZATION:
       return {
@@ -20,8 +22,11 @@ const appReducer = (state = initialState, action) => {
 };
 
 //Action Creators
+type successInitAT = {
+  type: typeof SUCCESS_INITIALIZATION;
+};
 
-export const setInitializedAC = () => ({
+export const setInitializedAC = (): successInitAT => ({
   type: SUCCESS_INITIALIZATION,
 });
 

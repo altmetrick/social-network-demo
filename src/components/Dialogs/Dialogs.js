@@ -5,7 +5,7 @@ import Message from './Message/Message';
 
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { addMessageAC } from '../../redux/reducers/dialogs-reducer';
+import { addMessageAC } from '../../redux/reducers/dialogs-reducer.ts';
 import AuthRedirect from '../../hoc/AuthRedirect';
 import { Field, reduxForm, reset } from 'redux-form';
 import { maxLength } from './../../utilities/validators/validators';

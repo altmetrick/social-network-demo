@@ -4,7 +4,7 @@ import { Field, reduxForm, reset } from 'redux-form';
 import { FormControlWithInputTag } from '../common/FormControls/FormControls';
 import { connect } from 'react-redux';
 
-import { loginThC as login } from '../../redux/reducers/auth-reducer';
+import { loginThC as login } from '../../redux/reducers/auth-reducer.ts';
 import { Navigate } from 'react-router-dom';
 
 const required = (value) => (value ? undefined : 'Required Field');

@@ -7,17 +7,31 @@ const SET_TOTAL_USERS_COUNT = 'users/SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_FETCHING = 'users/TOGGLE_IS_FETCHING';
 const TOGGLE_FOLLOWING_IN_PROGRESS = 'users/TOGGLE_FOLLOWING_IN_PROGRESS';
 
+type PhotosT = {
+  small: null | string;
+  large: null | string;
+};
+type UserT = {
+  name: string;
+  id: number;
+  uniqueUrlName: null | string;
+  photos: PhotosT;
+  status: null | string;
+  followed: boolean;
+};
+
 const initialState = {
-  users: [],
-  totalUsersCount: 103,
+  users: [] as Array<UserT>,
+  totalUsersCount: null as number | null,
   pageSize: 5,
   currentPage: 1,
   isFetching: false,
-  followingProgress: [],
-  fake: 0,
+  followingProgress: [] as Array<number>,
 };
 
-const usersReducer = (state = initialState, action) => {
+type StateT = typeof initialState;
+
+const usersReducer = (state = initialState, action): StateT => {
   switch (action.type) {
     case TOGGLE_FOLLOWED:
       return {
@@ -68,32 +82,61 @@ const usersReducer = (state = initialState, action) => {
 };
 
 //Action Creators
-export const toggleFollowedAC = (userId) => ({
+type ToggleFollowedAT = {
+  type: typeof TOGGLE_FOLLOWED;
+  userId: number;
+};
+export const toggleFollowedAC = (userId: number): ToggleFollowedAT => ({
   type: TOGGLE_FOLLOWED,
   userId,
 });
 
-export const setUsersAC = (users) => ({
+type SetUsersAT = {
+  type: typeof SET_USERS;
+  users: Array<UserT>;
+};
+export const setUsersAC = (users: Array<UserT>): SetUsersAT => ({
   type: SET_USERS,
   users,
 });
 
-export const setTotalUsersCountAC = (totalCount) => ({
+type SetTotalUsersCountAT = {
+  type: typeof SET_TOTAL_USERS_COUNT;
+  totalCount: number;
+};
+export const setTotalUsersCountAC = (
+  totalCount: number
+): SetTotalUsersCountAT => ({
   type: SET_TOTAL_USERS_COUNT,
   totalCount,
 });
 
-export const setCurrentPageAC = (pageNumber) => ({
+type SetCurrentPageAT = {
+  type: typeof SET_CURRENT_PAGE;
+  pageNumber: number;
+};
+export const setCurrentPageAC = (pageNumber: number): SetCurrentPageAT => ({
   type: SET_CURRENT_PAGE,
   pageNumber,
 });
 
-export const toggleIsFetchingAC = (isFetching) => ({
+type ToggleIsFetchingAT = {
+  type: typeof TOGGLE_IS_FETCHING;
+  isFetching: boolean;
+};
+export const toggleIsFetchingAC = (
+  isFetching: boolean
+): ToggleIsFetchingAT => ({
   type: TOGGLE_IS_FETCHING,
   isFetching,
 });
 
-export const toggleFollowingProgressAC = (isFetching, id) => ({
+type ToggleFollowingProgressAT = {
+  type: typeof TOGGLE_FOLLOWING_IN_PROGRESS;
+  isFetching: boolean;
+  id: number;
+};
+export const toggleFollowingProgressAC = (isFetching: boolean, id: number) => ({
   type: TOGGLE_FOLLOWING_IN_PROGRESS,
   isFetching,
   id,
