@@ -50,6 +50,7 @@ class App extends React.Component {
         <div className="appWrapper">
           <HeaderContainer />
           <Navbar />
+
           <div className="appContentWrapper">
             <Suspense fallback={<div>Loading...</div>}>
               <Routes>

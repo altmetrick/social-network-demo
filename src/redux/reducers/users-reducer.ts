@@ -145,7 +145,7 @@ export const getUsersThC = (pageSize, currentPage) => {
   };
 };
 
-export const followThC = (userId) => {
+export const followThC = (userId: number) => {
   return async (dispatch) => {
     dispatch(toggleFollowingProgressAC(true, userId));
 
@@ -160,7 +160,7 @@ export const followThC = (userId) => {
   };
 };
 
-export const unfollowThC = (userId) => {
+export const unfollowThC = (userId: number) => {
   return async (dispatch) => {
     dispatch(toggleFollowingProgressAC(true, userId));
 
