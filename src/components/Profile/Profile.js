@@ -5,7 +5,6 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 const Profile = (props) => {
-  console.log(props.isOwner);
   return (
     <div>
       <h2>Profile</h2>

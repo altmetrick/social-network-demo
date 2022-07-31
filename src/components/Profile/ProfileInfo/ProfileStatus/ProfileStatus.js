@@ -24,23 +24,29 @@ const ProfileStatus = (props) => {
 
   return (
     <div>
-      {!aditMode && (
+      {props.isOwner ? (
         <div>
-          <span onClick={activateAditMode}>
-            {props.userStatus || 'Status: ----'}
-          </span>
-        </div>
-      )}
+          {!aditMode && (
+            <div>
+              <span onClick={activateAditMode} style={{ cursor: 'pointer' }}>
+                {props.userStatus || 'Status: ----'}
+              </span>
+            </div>
+          )}
 
-      {aditMode && (
-        <div>
-          <input
-            value={status}
-            autoFocus={true}
-            onChange={onTextareaChange}
-            onBlur={deactivateAditMode}
-          />
+          {aditMode && (
+            <div>
+              <input
+                value={status}
+                autoFocus={true}
+                onChange={onTextareaChange}
+                onBlur={deactivateAditMode}
+              />
+            </div>
+          )}
         </div>
+      ) : (
+        <span>{props.userStatus || 'Status: ----'}</span>
       )}
     </div>
   );

@@ -33,11 +33,7 @@ const ProfileInfo = (props) => {
           <div className={s.imageWrapper}>
             <img
               className={s.mainPhoto}
-              src={`${
-                props.userData.photos.large
-                  ? props.userData.photos.large
-                  : defPhoto
-              }`}
+              src={props.userData.photos.large || defPhoto}
             />
             {props.isOwner && (
               <label htmlFor="chooseImg" className={s.selectImgBtn}>
@@ -58,10 +54,13 @@ const ProfileInfo = (props) => {
         <div>
           <h4>{props.userData.fullName}</h4>
         </div>
+
         <ProfileStatus
+          isOwner={props.isOwner}
           userStatus={props.userStatus}
           updateUserStatus={props.updateUserStatus}
         />
+
         <div>User Id: {props.userData.userId}</div>
 
         {props.isOwner && !editMode && (

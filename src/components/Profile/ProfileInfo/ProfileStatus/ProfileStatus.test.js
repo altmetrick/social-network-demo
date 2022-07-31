@@ -10,7 +10,7 @@ describe('ProfileStates', () => {
   });
 
   test('after click on status should be textarea', () => {
-    render(<ProfileStatus userStatus="My new status" />);
+    render(<ProfileStatus userStatus="My new status" isOwner={true} />);
 
     screen.debug();
 

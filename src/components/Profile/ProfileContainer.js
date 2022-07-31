@@ -42,15 +42,14 @@ class ProfileContainer extends Component {
   }
 
   render() {
+    const isOwter =
+      (this.props.authUserId && this.props.params.userId === 'myProfile') ||
+      (this.props.authUserId &&
+        this.props.params.userId == this.props.authUserId);
+
     return (
       <Profile
-        isOwner={
-          (this.props.authUserId && this.props.params.userId === 'myProfile') ||
-          (this.props.authUserId &&
-            this.props.params.userId == this.props.authUserId)
-            ? true
-            : false
-        }
+        isOwner={isOwter}
         saveProfile={this.props.saveProfile}
         saveImage={this.props.saveImage}
         isUploading={this.props.isUploading}
