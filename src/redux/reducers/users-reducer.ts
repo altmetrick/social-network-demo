@@ -1,4 +1,5 @@
 import { usersAPI } from '../../api/api';
+import { UserT } from '../../types/types';
 
 const TOGGLE_FOLLOWED = 'users/TOGGLE_FOLLOWED';
 const SET_USERS = 'users/SET_USERS';
@@ -6,19 +7,6 @@ const SET_CURRENT_PAGE = 'users/SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'users/SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_FETCHING = 'users/TOGGLE_IS_FETCHING';
 const TOGGLE_FOLLOWING_IN_PROGRESS = 'users/TOGGLE_FOLLOWING_IN_PROGRESS';
-
-type PhotosT = {
-  small: null | string;
-  large: null | string;
-};
-type UserT = {
-  name: string;
-  id: number;
-  uniqueUrlName: null | string;
-  photos: PhotosT;
-  status: null | string;
-  followed: boolean;
-};
 
 const initialState = {
   users: [] as Array<UserT>,

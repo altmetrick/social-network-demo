@@ -1,42 +1,14 @@
 import { profileAPI } from '../../api/api';
 import { stopSubmit } from 'redux-form';
 import { matchKeysToMessages } from '../../utilities/helpers/helpers';
+import { PhotosT, PostT, ProfileDataT } from '../../types/types';
 
 const ADD_POST = 'profile/ADD_POST';
 const DELETE_POST = 'profile/DELETE_POST';
-const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
+const SET_PROFILE_DATA = 'profile/SET_PROFILE_DATA';
 const SET_USER_STATUS = 'profile/SET_USER_STATUS';
 const SAVE_IMAGE_SUCCESS = 'profile/SAVE_IMAGE_SUCCESS';
 const TOGGLE_IS_UPLOADING_IMG = 'profile/TOGGLE_IS_UPLOADING_IMG';
-
-type PostT = {
-  id: string;
-  text: string;
-  likes: number;
-};
-type ContactsT = {
-  github: string | null;
-  vk: string | null;
-  facebook: string | null;
-  instagram: string | null;
-  twitter: string | null;
-  website: string | null;
-  youtube: string | null;
-  mainLink: string | null;
-};
-type PhotosT = {
-  small: string | null;
-  large: string | null;
-};
-
-type UserDataT = {
-  userId: number;
-  lookingForAJob: boolean;
-  lookingForAJobDescription: string;
-  fullName: string;
-  contacts: ContactsT;
-  photos: PhotosT;
-};
 
 const initialState = {
   posts: [
@@ -45,7 +17,7 @@ const initialState = {
     { id: '3', text: 'Jack of all trades master of none', likes: 13 },
     { id: '4', text: 'Lorem ipsum Ola ', likes: 16 },
   ] as Array<PostT>,
-  userProfileData: null as UserDataT | null,
+  userProfileData: null as ProfileDataT | null,
   userStatus: '',
   isUploadingImg: false,
 };
@@ -72,10 +44,10 @@ const profileReducer = (state = initialState, action: any): StateT => {
         posts: state.posts.filter((post) => post.id !== action.postId),
       };
 
-    case SET_USER_PROFILE:
+    case SET_PROFILE_DATA:
       return {
         ...state,
-        userProfileData: action.user,
+        userProfileData: action.profileData,
       };
 
     case SET_USER_STATUS:
@@ -90,7 +62,7 @@ const profileReducer = (state = initialState, action: any): StateT => {
         userProfileData: {
           ...state.userProfileData,
           photos: action.photosUrl,
-        } as UserDataT,
+        } as ProfileDataT,
       };
 
     case TOGGLE_IS_UPLOADING_IMG:
@@ -123,13 +95,15 @@ export const deletePostAC = (postId: number): deletePostAT => ({
   postId,
 });
 //
-type setUserProfileAT = {
-  type: typeof SET_USER_PROFILE;
-  user: UserDataT;
+type setProfileDataAT = {
+  type: typeof SET_PROFILE_DATA;
+  profileData: ProfileDataT;
 };
-export const setUserProfileAC = (user: UserDataT): setUserProfileAT => ({
-  type: SET_USER_PROFILE,
-  user,
+export const setProfileDataAC = (
+  profileData: ProfileDataT
+): setProfileDataAT => ({
+  type: SET_PROFILE_DATA,
+  profileData,
 });
 
 type setUserStatusAT = {
@@ -166,7 +140,7 @@ export const getProfileThC = (userId) => {
   return async (dispatch) => {
     let data = await profileAPI.getProfileData(userId);
 
-    dispatch(setUserProfileAC(data));
+    dispatch(setProfileDataAC(data));
   };
 };
 
