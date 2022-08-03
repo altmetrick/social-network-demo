@@ -1,22 +1,37 @@
 import s from './ProfileInfo.module.css';
 import defPhoto from './../../../assets/images/User_default_avatar.png';
 
-import { useState } from 'react';
+import React, { useState, FunctionComponent, ChangeEvent } from 'react';
 
 import Preloader from '../../common/Preloader/Preloader';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 import ProfileData from './ProfileData/ProfileData';
 import ProfileDataForm from './ProfileDataForm/ProfileDataForm';
+import { ProfileDataT } from '../../../types/types';
 
-const ProfileInfo = (props) => {
+type PropsT = {
+  isOwner: boolean;
+  saveImage: (imageFile: any) => (dispatch: any) => Promise<void>;
+  saveProfile: (
+    profileData: ProfileDataT
+  ) => (dispatch: any, getState: any) => Promise<any>;
+  isUploading: boolean;
+
+  userData: ProfileDataT;
+  userStatus: string;
+  updateUserStatus: (statusText: string) => (dispatch: any) => Promise<void>;
+};
+
+const ProfileInfo: FunctionComponent<PropsT> = (props) => {
   const [editMode, setEditMode] = useState(false);
 
-  const onImageChange = (e) => {
+  const onImageChange = (e: any) => {
     const imageFile = e.target.files[0];
     props.saveImage(imageFile);
   };
 
   const onFormSubmit = (formData) => {
+    //@ts-ignore
     props.saveProfile(formData).then(() => {
       setEditMode(false);
     });
@@ -70,6 +85,7 @@ const ProfileInfo = (props) => {
         {editMode ? (
           <ProfileDataForm
             initialValues={props.userData}
+            //@ts-ignore
             userData={props.userData}
             onSubmit={onFormSubmit}
           />

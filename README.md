@@ -72,5 +72,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ### webpack
 
 add this:
-extensions: ['.js', '.jsx', '.ts', '.tsx']
+extensions: [".ts", ".tsx", ".js", ".css", ".scss"]
 to node-modules/react-scripts/config/webpack.config.js

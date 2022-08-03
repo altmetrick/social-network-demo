@@ -1,8 +1,17 @@
 import s from './../Users.module.css';
 import userImage from './../../../assets/images/User_default_avatar.png';
 import { Link } from 'react-router-dom';
+import React, { FunctionComponent } from 'react';
+import { UserT } from '../../../types/types';
 
-const User = (props) => {
+type PropsT = {
+  user: UserT;
+  followingProgress: Array<number>;
+  followUser: (userId: number) => void;
+  unFollowUser: (userId: number) => void;
+};
+
+const User: FunctionComponent<PropsT> = (props) => {
   const { user } = props;
 
   return (

@@ -1,6 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FunctionComponent,
+  useEffect,
+  useState,
+} from 'react';
 
-const ProfileStatus = (props) => {
+type PropsT = {
+  isOwner: boolean;
+  userStatus: string;
+  updateUserStatus: (statusText: string) => (dispatch: any) => Promise<void>;
+};
+
+const ProfileStatus: FunctionComponent<PropsT> = (props) => {
   const [aditMode, setEditMode] = useState(false);
   const [status, setStatus] = useState(props.userStatus);
 
@@ -15,10 +26,11 @@ const ProfileStatus = (props) => {
 
   const deactivateAditMode = () => {
     setEditMode(false);
+
     props.updateUserStatus(status);
   };
 
-  const onTextareaChange = (e) => {
+  const onTextareaChange = (e: ChangeEvent<HTMLInputElement>) => {
     setStatus(e.target.value);
   };
 

@@ -9,7 +9,7 @@ import usersReducer from './reducers/users-reducer';
 import authReducer from './reducers/auth-reducer';
 import appReducer from './reducers/app-reducer';
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
   profilePage: profileReducer,
   dialogsPage: dialogsReducer,
   usersPage: usersReducer,
@@ -18,10 +18,23 @@ const reducers = combineReducers({
   form: formReducer,
 });
 
-//const store = createStore(reducers, applyMiddleware(thunk));
+//const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk))
+);
+
+export type RootStateT = ReturnType<typeof rootReducer>;
+export type AppDispatchT = typeof store.dispatch;
+
+declare global {
+  interface Window {
+    store: any;
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
+  }
+}
 
 window.store = store;
 

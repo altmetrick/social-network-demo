@@ -10,7 +10,7 @@ const TOGGLE_FOLLOWING_IN_PROGRESS = 'users/TOGGLE_FOLLOWING_IN_PROGRESS';
 
 const initialState = {
   users: [] as Array<UserT>,
-  totalUsersCount: null as number | null,
+  totalUsersCount: 0 as number,
   pageSize: 5,
   currentPage: 1,
   isFetching: false,
@@ -131,7 +131,7 @@ export const toggleFollowingProgressAC = (isFetching: boolean, id: number) => ({
 });
 
 //Thunk Creators
-export const getUsersThC = (pageSize, currentPage) => {
+export const getUsersThC = (pageSize: number, currentPage: number) => {
   return async (dispatch) => {
     dispatch(toggleIsFetchingAC(true));
     dispatch(setCurrentPageAC(currentPage));

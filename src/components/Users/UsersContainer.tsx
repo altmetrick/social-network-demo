@@ -10,19 +10,26 @@ import {
   unfollowThC as unfollow,
 } from '../../redux/reducers/users-reducer';
 import { UserT } from '../../types/types';
+import { RootStateT } from '../../redux/redux-store';
 
-type PropsT = {
+type MapStatePropsT = {
   users: Array<UserT>;
   totalUsersCount: number;
   isFetching: boolean;
   followingProgress: Array<number>;
   pageSize: number;
   currentPage: number;
+};
 
+type MapDispatchPropsT = {
   getUsers: (pageSize: number, currentPage: number) => void;
   follow: (userId: number) => void;
   unfollow: (userId: number) => void;
 };
+
+type OwnPropsT = {};
+
+type PropsT = MapDispatchPropsT & MapStatePropsT & OwnPropsT;
 
 class UsersContainer extends Component<PropsT> {
   componentDidMount() {
@@ -56,7 +63,7 @@ class UsersContainer extends Component<PropsT> {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootStateT): MapStatePropsT => {
   return {
     users: state.usersPage.users,
     totalUsersCount: state.usersPage.totalUsersCount,
@@ -67,7 +74,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
+export default connect<
+  MapStatePropsT,
+  MapDispatchPropsT,
+  OwnPropsT,
+  RootStateT
+>(mapStateToProps, {
   getUsers,
   follow,
   unfollow,

@@ -15,8 +15,8 @@ const Paginator: FunctionComponent<PropsT> = (props) => {
     totalItemsCount,
     pageSize,
     currentPage,
-    onPageChanged,
     portionSize = 10,
+    onPageChanged,
   } = props;
 
   let pagesCount = Math.ceil(totalItemsCount / pageSize);

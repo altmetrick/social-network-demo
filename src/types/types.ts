@@ -28,7 +28,7 @@ export type ProfileDataT = {
   photos: PhotosT;
 };
 
-//users reducer
+//users
 
 export type UserT = {
   name: string;

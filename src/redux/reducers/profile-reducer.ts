@@ -136,7 +136,7 @@ export const toggleIsUploadingImgAC = (
 });
 
 //Thunk Creators
-export const getProfileThC = (userId) => {
+export const getProfileThC = (userId: number) => {
   return async (dispatch) => {
     let data = await profileAPI.getProfileData(userId);
 
@@ -144,7 +144,7 @@ export const getProfileThC = (userId) => {
   };
 };
 
-export const getUserStatusThC = (userId) => {
+export const getUserStatusThC = (userId: number) => {
   return async (dispatch) => {
     let data = await profileAPI.getStatus(userId);
 
@@ -152,7 +152,7 @@ export const getUserStatusThC = (userId) => {
   };
 };
 
-export const updateUserStatusThC = (statusText) => {
+export const updateUserStatusThC = (statusText: string) => {
   return async (dispatch) => {
     try {
       let res = await profileAPI.updateStatus(statusText);
@@ -178,7 +178,7 @@ export const saveImageThC = (imageFile) => {
   };
 };
 
-export const saveProfileThC = (profileData) => {
+export const saveProfileThC = (profileData: ProfileDataT) => {
   return async (dispatch, getState) => {
     const res = await profileAPI.saveProfile(profileData);
 
