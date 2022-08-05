@@ -1,5 +1,7 @@
 import { stopSubmit } from 'redux-form';
 import { authAPI, securityAPI } from '../../api/api';
+import { ThunkAction } from 'redux-thunk';
+import { RootStateT } from '../redux-store';
 
 const SET_AUTH_USER_DATA = 'auth/SET_AUTH_USER_DATA';
 const GET_CAPTCHA_URL_SUCCESS = 'auth/GET_CAPTCHA_URL_SUCCESS';
@@ -14,12 +16,11 @@ const initialState = {
 
 type State = typeof initialState;
 
-const authReducer = (state = initialState, action: any): State => {
+const authReducer = (state = initialState, action: ActionType): State => {
   switch (action.type) {
     case SET_AUTH_USER_DATA:
       return {
         ...state,
-        userId: 'io',
         ...action.payload,
       };
 
@@ -35,6 +36,8 @@ const authReducer = (state = initialState, action: any): State => {
 };
 
 //Action Creators
+type ActionType = setAuthUserDataAT | getCaptchaUrlAT;
+
 type setAuthUserDataAT = {
   type: typeof SET_AUTH_USER_DATA;
   payload: {
@@ -44,7 +47,6 @@ type setAuthUserDataAT = {
     isAuth: boolean;
   };
 };
-
 export const setAuthUserDataAC = (
   userId: number | null,
   email: string | null,
@@ -59,14 +61,15 @@ type getCaptchaUrlAT = {
   type: typeof GET_CAPTCHA_URL_SUCCESS;
   payload: { captchaUrl: string };
 };
-
 export const getCaptchaUrlAC = (captchaUrl: string): getCaptchaUrlAT => ({
   type: GET_CAPTCHA_URL_SUCCESS,
   payload: { captchaUrl },
 });
 
 //ThunkCreators
-export const getAuthUserDataThC = () => {
+type ThunkType = ThunkAction<Promise<void>, RootStateT, unknown, ActionType>;
+
+export const getAuthUserDataThC = (): ThunkType => {
   //by default async f returns a promise which will be resolved
   //after running code of async func
   return async (dispatch) => {
@@ -79,7 +82,6 @@ export const getAuthUserDataThC = () => {
       dispatch(setAuthUserDataAC(id, email, login, true));
     }
   };
-
   // return  (dispatch) => {
   //   return authAPI.authMe().then((data) => {
   //     if (data.resultCode === 0) {
@@ -92,7 +94,7 @@ export const getAuthUserDataThC = () => {
   // };
 };
 
-export const loginThC = (email, password, rememberMe, captcha) => {
+export const loginThC = (email, password, rememberMe, captcha): ThunkType => {
   return async (dispatch) => {
     let res = await authAPI.login(email, password, rememberMe, captcha);
 
@@ -115,7 +117,7 @@ export const loginThC = (email, password, rememberMe, captcha) => {
   };
 };
 
-export const logOutThC = () => {
+export const logOutThC = (): ThunkType => {
   return async (dispatch) => {
     let res = await authAPI.logOut();
 

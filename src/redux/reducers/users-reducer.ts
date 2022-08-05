@@ -1,5 +1,8 @@
+import { Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import { usersAPI } from '../../api/api';
 import { UserT } from '../../types/types';
+import { RootStateT } from '../redux-store';
 
 const TOGGLE_FOLLOWED = 'users/TOGGLE_FOLLOWED';
 const SET_USERS = 'users/SET_USERS';
@@ -19,7 +22,7 @@ const initialState = {
 
 type StateT = typeof initialState;
 
-const usersReducer = (state = initialState, action): StateT => {
+const usersReducer = (state = initialState, action: ActionType): StateT => {
   switch (action.type) {
     case TOGGLE_FOLLOWED:
       return {
@@ -70,6 +73,14 @@ const usersReducer = (state = initialState, action): StateT => {
 };
 
 //Action Creators
+type ActionType =
+  | ToggleFollowedAT
+  | SetUsersAT
+  | SetTotalUsersCountAT
+  | SetCurrentPageAT
+  | ToggleIsFetchingAT
+  | ToggleFollowingProgressAT;
+
 type ToggleFollowedAT = {
   type: typeof TOGGLE_FOLLOWED;
   userId: number;
@@ -124,15 +135,24 @@ type ToggleFollowingProgressAT = {
   isFetching: boolean;
   id: number;
 };
-export const toggleFollowingProgressAC = (isFetching: boolean, id: number) => ({
+export const toggleFollowingProgressAC = (
+  isFetching: boolean,
+  id: number
+): ToggleFollowingProgressAT => ({
   type: TOGGLE_FOLLOWING_IN_PROGRESS,
   isFetching,
   id,
 });
 
 //Thunk Creators
-export const getUsersThC = (pageSize: number, currentPage: number) => {
-  return async (dispatch) => {
+
+type ThunkType = ThunkAction<Promise<void>, RootStateT, unknown, ActionType>;
+
+export const getUsersThC = (
+  pageSize: number,
+  currentPage: number
+): ThunkType => {
+  return async (dispatch, getState) => {
     dispatch(toggleIsFetchingAC(true));
     dispatch(setCurrentPageAC(currentPage));
 
@@ -146,7 +166,7 @@ export const getUsersThC = (pageSize: number, currentPage: number) => {
 };
 
 export const followThC = (userId: number) => {
-  return async (dispatch) => {
+  return async (dispatch: Dispatch<ActionType>, state: () => RootStateT) => {
     dispatch(toggleFollowingProgressAC(true, userId));
 
     let data = await usersAPI.follow(userId);
@@ -160,7 +180,7 @@ export const followThC = (userId: number) => {
   };
 };
 
-export const unfollowThC = (userId: number) => {
+export const unfollowThC = (userId: number): ThunkType => {
   return async (dispatch) => {
     dispatch(toggleFollowingProgressAC(true, userId));
 

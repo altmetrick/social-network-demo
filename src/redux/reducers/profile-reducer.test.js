@@ -23,7 +23,7 @@ describe('Users Reducers', () => {
   });
 
   test('The length of posts should be Decremented', () => {
-    let action = deletePostAC('2');
+    let action = deletePostAC(2);
     let res = profileReducer(initialState, action);
 
     expect(res.posts.length).toBe(3);
