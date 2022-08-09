@@ -1,5 +1,10 @@
 import { stopSubmit } from 'redux-form';
-import { authAPI, securityAPI } from '../../api/api';
+import {
+  authAPI,
+  ResultCodeEnum,
+  ResultCodeWithCaptchaEnum,
+  securityAPI,
+} from '../../api/api';
 import { ThunkAction } from 'redux-thunk';
 import { RootStateT } from '../redux-store';
 
@@ -75,7 +80,7 @@ export const getAuthUserDataThC = (): ThunkType => {
   return async (dispatch) => {
     let data = await authAPI.authMe();
 
-    if (data.resultCode === 0) {
+    if (data.resultCode === ResultCodeEnum.Success) {
       let { id, email, login } = data.data;
 
       console.log(data);
@@ -96,20 +101,20 @@ export const getAuthUserDataThC = (): ThunkType => {
 
 export const loginThC = (email, password, rememberMe, captcha): ThunkType => {
   return async (dispatch) => {
-    let res = await authAPI.login(email, password, rememberMe, captcha);
+    let data = await authAPI.login(email, password, rememberMe, captcha);
 
-    if (res.data.resultCode === 0) {
+    if (data.resultCode === ResultCodeEnum.Success) {
       dispatch(getAuthUserDataThC());
     } else {
-      if (res.data.resultCode === 10) {
+      if (data.resultCode === ResultCodeWithCaptchaEnum.CaptchaIsRequired) {
         let res = await securityAPI.getCaptchaUrl();
         dispatch(getCaptchaUrlAC(res.data.url));
       }
 
       let action = stopSubmit('loginForm', {
         _error:
-          res.data.messages.length > 0
-            ? res.data.messages[0]
+          data.messages.length > 0
+            ? data.messages[0]
             : 'Email or Password is wrong!!!',
       });
       dispatch(action);
@@ -119,9 +124,9 @@ export const loginThC = (email, password, rememberMe, captcha): ThunkType => {
 
 export const logOutThC = (): ThunkType => {
   return async (dispatch) => {
-    let res = await authAPI.logOut();
+    let data = await authAPI.logOut();
 
-    if (res.data.resultCode === 0) {
+    if (data.resultCode === ResultCodeEnum.Success) {
       dispatch(setAuthUserDataAC(null, null, null, false));
     }
   };

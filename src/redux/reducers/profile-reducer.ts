@@ -1,4 +1,4 @@
-import { profileAPI } from '../../api/api';
+import { profileAPI, ResultCodeEnum } from '../../api/api';
 import { stopSubmit } from 'redux-form';
 import { matchKeysToMessages } from '../../utilities/helpers/helpers';
 import { ContactsT, PhotosT, PostT, ProfileDataT } from '../../types/types';
@@ -167,9 +167,9 @@ export const getUserStatusThC = (userId: number): ThunkType => {
 export const updateUserStatusThC = (statusText: string): ThunkType => {
   return async (dispatch) => {
     try {
-      let res = await profileAPI.updateStatus(statusText);
+      let data = await profileAPI.updateStatus(statusText);
 
-      if (res.data.resultCode === 0) {
+      if (data.resultCode === ResultCodeEnum.Success) {
         dispatch(setUserStatusAC(statusText));
       }
     } catch (error) {
@@ -181,10 +181,10 @@ export const updateUserStatusThC = (statusText: string): ThunkType => {
 export const saveImageThC = (imageFile): ThunkType => {
   return async (dispatch) => {
     dispatch(toggleIsUploadingImgAC(true));
-    let res = await profileAPI.saveImage(imageFile);
+    let data = await profileAPI.saveImage(imageFile);
 
-    if (res.data.resultCode === 0) {
-      dispatch(saveImageSuccessAC(res.data.data.photos));
+    if (data.resultCode === ResultCodeEnum.Success) {
+      dispatch(saveImageSuccessAC(data.data.photos));
     }
     dispatch(toggleIsUploadingImgAC(false));
   };
@@ -192,18 +192,19 @@ export const saveImageThC = (imageFile): ThunkType => {
 
 export const saveProfileThC = (profileData: ProfileDataT): ThunkType => {
   return async (dispatch, getState) => {
-    const res = await profileAPI.saveProfile(profileData);
+    const data = await profileAPI.saveProfile(profileData);
 
     const state = getState();
-    //@ts-ignore
-    const contacts = state.profilePage.userProfileData.contacts;
 
-    if (res.data.resultCode === 0) {
+    if (data.resultCode === ResultCodeEnum.Success) {
       //@ts-ignore
       dispatch(getProfileThC(state.authData.userId));
     } else {
+      //@ts-ignore
+      const contacts = state.profilePage.userProfileData.contacts;
+
       let action = stopSubmit('profileDataForm', {
-        contacts: matchKeysToMessages(contacts, res.data.messages),
+        contacts: matchKeysToMessages(contacts, data.messages),
         //_error: 'Invalid links',
       });
       dispatch(action);

@@ -1,4 +1,5 @@
 import s from './ProfileInfo.module.css';
+
 import defPhoto from './../../../assets/images/User_default_avatar.png';
 
 import React, { useState, FunctionComponent, ChangeEvent } from 'react';
