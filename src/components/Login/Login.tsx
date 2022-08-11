@@ -1,15 +1,32 @@
 import s from './../common/FormControls/FormControls.module.css';
 
-import { Field, reduxForm, reset } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { FormControlWithInputTag } from '../common/FormControls/FormControls';
 import { connect } from 'react-redux';
 
-import { loginThC as login } from '../../redux/reducers/auth-reducer.ts';
+import { loginThC as login } from '../../redux/reducers/auth-reducer';
 import { Navigate } from 'react-router-dom';
+import React, { FunctionComponent } from 'react';
+import { RootStateT } from '../../redux/redux-store';
 
 const required = (value) => (value ? undefined : 'Required Field');
 
-const LoginForm = (props) => {
+type LoginFormPropsT = {
+  captchaUrl: string | null;
+};
+
+type LoginFormDataT = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+  captcha: string | undefined;
+};
+
+type FieldPT = { name: 'email'; validate: Array<any> };
+
+const LoginForm: FunctionComponent<
+  InjectedFormProps<LoginFormDataT, LoginFormPropsT> & LoginFormPropsT
+> = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <div>
@@ -36,6 +53,7 @@ const LoginForm = (props) => {
         <Field name="rememberMe" component="input" type="checkbox" />
         remember me
       </div>
+
       {props.captchaUrl && (
         <div>
           <img src={props.captchaUrl} />
@@ -62,10 +80,28 @@ const LoginForm = (props) => {
   );
 };
 
-const LoginReduxForm = reduxForm({ form: 'loginForm' })(LoginForm);
+const LoginReduxForm = reduxForm<LoginFormDataT, LoginFormPropsT>({
+  form: 'loginForm',
+})(LoginForm);
 
-const Login = (props) => {
-  const submit = (values, dispatch) => {
+type OwnPropsT = {};
+type MapStatePropsT = {
+  isAuth: boolean;
+  userId: number | null;
+  captchaUrl: string | null;
+};
+type MapDispatchPropsT = {
+  login: (
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha: string | undefined
+  ) => void;
+};
+type LoginPropsT = OwnPropsT & MapStatePropsT & MapDispatchPropsT;
+
+const Login: FunctionComponent<LoginPropsT> = (props) => {
+  const submit = (values: LoginFormDataT, dispatch) => {
     const { email, password, rememberMe, captcha } = values;
 
     props.login(email, password, rememberMe, captcha);
@@ -83,7 +119,7 @@ const Login = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootStateT) => ({
   isAuth: state.authData.isAuth,
   userId: state.authData.userId,
   captchaUrl: state.authData.captchaUrl,

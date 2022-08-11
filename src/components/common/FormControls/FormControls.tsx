@@ -1,4 +1,5 @@
 import s from './FormControls.module.css';
+import React, { FunctionComponent } from 'react';
 
 //HOC
 // cons Textarea = CreateControlFormEl('textarea')
@@ -26,7 +27,8 @@ export const CreateControlFormEl = (Element) => {
 //Provide inputTag to props to create formControl with appropriate field element
 //<newFormControl inputTag={'input'} />
 //<newFormControl inputTag={'textarea'} />
-export const FormControlWithInputTag = (props) => {
+
+export const FormControlWithInputTag: FunctionComponent<any> = (props) => {
   const {
     input,
     placeholder,

@@ -1,4 +1,4 @@
-import { stopSubmit } from 'redux-form';
+import { FormAction, stopSubmit } from 'redux-form';
 import {
   authAPI,
   ResultCodeEnum,
@@ -41,7 +41,7 @@ const authReducer = (state = initialState, action: ActionType): State => {
 };
 
 //Action Creators
-type ActionType = setAuthUserDataAT | getCaptchaUrlAT;
+type ActionType = setAuthUserDataAT | getCaptchaUrlAT | FormAction;
 
 type setAuthUserDataAT = {
   type: typeof SET_AUTH_USER_DATA;
@@ -99,7 +99,12 @@ export const getAuthUserDataThC = (): ThunkType => {
   // };
 };
 
-export const loginThC = (email, password, rememberMe, captcha): ThunkType => {
+export const loginThC = (
+  email: string,
+  password: string,
+  rememberMe: boolean,
+  captcha: string | undefined
+): ThunkType => {
   return async (dispatch) => {
     let data = await authAPI.login(email, password, rememberMe, captcha);
 
