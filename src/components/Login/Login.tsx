@@ -22,8 +22,6 @@ type LoginFormDataT = {
   captcha: string | undefined;
 };
 
-type FieldPT = { name: 'email'; validate: Array<any> };
-
 const LoginForm: FunctionComponent<
   InjectedFormProps<LoginFormDataT, LoginFormPropsT> & LoginFormPropsT
 > = (props) => {

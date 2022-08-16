@@ -6,7 +6,7 @@ import {
   securityAPI,
 } from '../../api/api';
 import { ThunkAction } from 'redux-thunk';
-import { RootStateT } from '../redux-store';
+import { InferActionTypes, RootStateT } from '../redux-store';
 
 const SET_AUTH_USER_DATA = 'auth/SET_AUTH_USER_DATA';
 const GET_CAPTCHA_URL_SUCCESS = 'auth/GET_CAPTCHA_URL_SUCCESS';
@@ -21,7 +21,7 @@ const initialState = {
 
 type State = typeof initialState;
 
-const authReducer = (state = initialState, action: ActionType): State => {
+const authReducer = (state = initialState, action: ActionTypes): State => {
   switch (action.type) {
     case SET_AUTH_USER_DATA:
       return {
@@ -41,38 +41,34 @@ const authReducer = (state = initialState, action: ActionType): State => {
 };
 
 //Action Creators
-type ActionType = setAuthUserDataAT | getCaptchaUrlAT | FormAction;
+type ActionTypes = InferActionTypes<typeof actions>;
 
-type setAuthUserDataAT = {
-  type: typeof SET_AUTH_USER_DATA;
-  payload: {
-    userId: number | null;
-    email: string | null;
-    login: string | null;
-    isAuth: boolean;
-  };
-};
-export const setAuthUserDataAC = (
-  userId: number | null,
-  email: string | null,
-  login: string | null,
-  isAuth: boolean
-): setAuthUserDataAT => ({
-  type: SET_AUTH_USER_DATA,
-  payload: { userId, email, login, isAuth },
-});
+const actions = {
+  setAuthUserDataAC: (
+    userId: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean
+  ) =>
+    <const>{
+      type: SET_AUTH_USER_DATA,
+      payload: { userId, email, login, isAuth },
+    },
 
-type getCaptchaUrlAT = {
-  type: typeof GET_CAPTCHA_URL_SUCCESS;
-  payload: { captchaUrl: string };
+  getCaptchaUrlAC: (captchaUrl: string) =>
+    ({
+      type: GET_CAPTCHA_URL_SUCCESS,
+      payload: { captchaUrl },
+    } as const),
 };
-export const getCaptchaUrlAC = (captchaUrl: string): getCaptchaUrlAT => ({
-  type: GET_CAPTCHA_URL_SUCCESS,
-  payload: { captchaUrl },
-});
 
 //ThunkCreators
-type ThunkType = ThunkAction<Promise<void>, RootStateT, unknown, ActionType>;
+type ThunkType = ThunkAction<
+  Promise<void>,
+  RootStateT,
+  unknown,
+  ActionTypes | FormAction
+>;
 
 export const getAuthUserDataThC = (): ThunkType => {
   //by default async f returns a promise which will be resolved
@@ -84,10 +80,9 @@ export const getAuthUserDataThC = (): ThunkType => {
       let { id, email, login } = data.data;
 
       console.log(data);
-      dispatch(setAuthUserDataAC(id, email, login, true));
+      dispatch(actions.setAuthUserDataAC(id, email, login, true));
     }
   };
-  // return  (dispatch) => {
   //   return authAPI.authMe().then((data) => {
   //     if (data.resultCode === 0) {
   //       let { id, email, login } = data.data;
@@ -113,7 +108,7 @@ export const loginThC = (
     } else {
       if (data.resultCode === ResultCodeWithCaptchaEnum.CaptchaIsRequired) {
         let res = await securityAPI.getCaptchaUrl();
-        dispatch(getCaptchaUrlAC(res.data.url));
+        dispatch(actions.getCaptchaUrlAC(res.data.url));
       }
 
       let action = stopSubmit('loginForm', {
@@ -132,7 +127,7 @@ export const logOutThC = (): ThunkType => {
     let data = await authAPI.logOut();
 
     if (data.resultCode === ResultCodeEnum.Success) {
-      dispatch(setAuthUserDataAC(null, null, null, false));
+      dispatch(actions.setAuthUserDataAC(null, null, null, false));
     }
   };
 };

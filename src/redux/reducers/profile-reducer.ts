@@ -1,9 +1,9 @@
 import { profileAPI, ResultCodeEnum } from '../../api/api';
-import { stopSubmit } from 'redux-form';
+import { stopSubmit, FormAction } from 'redux-form';
 import { matchKeysToMessages } from '../../utilities/helpers/helpers';
 import { ContactsT, PhotosT, PostT, ProfileDataT } from '../../types/types';
 import { ThunkAction } from 'redux-thunk';
-import { RootStateT } from '../redux-store';
+import { InferActionTypes, RootStateT } from '../redux-store';
 
 const ADD_POST = 'profile/ADD_POST';
 const DELETE_POST = 'profile/DELETE_POST';
@@ -79,80 +79,58 @@ const profileReducer = (state = initialState, action: ActionType): StateT => {
 };
 
 //Action Creators
-type ActionType =
-  | AddPostAT
-  | DeletePostAT
-  | SetProfileDataAT
-  | SetUserStatusAT
-  | SaveImageSuccessAT
-  | ToggleIsUploadingImgAT;
+type ActionType = InferActionTypes<typeof actions>;
 
-type AddPostAT = {
-  type: typeof ADD_POST;
-  postText: string;
-};
-export const addPostAC = (postText: string): AddPostAT => ({
-  type: ADD_POST,
-  postText,
-});
+export const actions = {
+  addPostAC: (postText: string) =>
+    ({
+      type: ADD_POST,
+      postText,
+    } as const),
 
-type DeletePostAT = {
-  type: typeof DELETE_POST;
-  postId: number;
-};
-export const deletePostAC = (postId: number): DeletePostAT => ({
-  type: DELETE_POST,
-  postId,
-});
-//
-type SetProfileDataAT = {
-  type: typeof SET_PROFILE_DATA;
-  profileData: ProfileDataT;
-};
-export const setProfileDataAC = (
-  profileData: ProfileDataT
-): SetProfileDataAT => ({
-  type: SET_PROFILE_DATA,
-  profileData,
-});
+  deletePostAC: (postId: number) =>
+    ({
+      type: DELETE_POST,
+      postId,
+    } as const),
 
-type SetUserStatusAT = {
-  type: typeof SET_USER_STATUS;
-  text: string;
-};
-export const setUserStatusAC = (text: string): SetUserStatusAT => ({
-  type: SET_USER_STATUS,
-  text,
-});
+  setProfileDataAC: (profileData: ProfileDataT) =>
+    ({
+      type: SET_PROFILE_DATA,
+      profileData,
+    } as const),
 
-type SaveImageSuccessAT = {
-  type: typeof SAVE_IMAGE_SUCCESS;
-  photosUrl: PhotosT;
-};
-export const saveImageSuccessAC = (photosUrl: any): SaveImageSuccessAT => ({
-  type: SAVE_IMAGE_SUCCESS,
-  photosUrl,
-});
+  setUserStatusAC: (text: string) =>
+    ({
+      type: SET_USER_STATUS,
+      text,
+    } as const),
 
-type ToggleIsUploadingImgAT = {
-  type: typeof TOGGLE_IS_UPLOADING_IMG;
-  isUploading: boolean;
-};
-export const toggleIsUploadingImgAC = (
-  isUploading: boolean
-): ToggleIsUploadingImgAT => ({
-  type: TOGGLE_IS_UPLOADING_IMG,
-  isUploading,
-});
+  saveImageSuccessAC: (photosUrl: any) =>
+    ({
+      type: SAVE_IMAGE_SUCCESS,
+      photosUrl,
+    } as const),
 
+  toggleIsUploadingImgAC: (isUploading: boolean) =>
+    ({
+      type: TOGGLE_IS_UPLOADING_IMG,
+      isUploading,
+    } as const),
+};
 //Thunk Creators
-type ThunkType = ThunkAction<Promise<void>, RootStateT, unknown, ActionType>;
+type ThunkType = ThunkAction<
+  Promise<void>,
+  RootStateT,
+  unknown,
+  ActionType | FormAction
+>;
 
 export const getProfileThC = (userId: number): ThunkType => {
   return async (dispatch) => {
     let data = await profileAPI.getProfileData(userId);
 
-    dispatch(setProfileDataAC(data));
+    dispatch(actions.setProfileDataAC(data));
   };
 };
 
@@ -160,7 +138,7 @@ export const getUserStatusThC = (userId: number): ThunkType => {
   return async (dispatch) => {
     let data = await profileAPI.getStatus(userId);
 
-    dispatch(setUserStatusAC(data));
+    dispatch(actions.setUserStatusAC(data));
   };
 };
 
@@ -170,7 +148,7 @@ export const updateUserStatusThC = (statusText: string): ThunkType => {
       let data = await profileAPI.updateStatus(statusText);
 
       if (data.resultCode === ResultCodeEnum.Success) {
-        dispatch(setUserStatusAC(statusText));
+        dispatch(actions.setUserStatusAC(statusText));
       }
     } catch (error) {
       console.log('Error');
@@ -180,13 +158,13 @@ export const updateUserStatusThC = (statusText: string): ThunkType => {
 
 export const saveImageThC = (imageFile): ThunkType => {
   return async (dispatch) => {
-    dispatch(toggleIsUploadingImgAC(true));
+    dispatch(actions.toggleIsUploadingImgAC(true));
     let data = await profileAPI.saveImage(imageFile);
 
     if (data.resultCode === ResultCodeEnum.Success) {
-      dispatch(saveImageSuccessAC(data.data.photos));
+      dispatch(actions.saveImageSuccessAC(data.data.photos));
     }
-    dispatch(toggleIsUploadingImgAC(false));
+    dispatch(actions.toggleIsUploadingImgAC(false));
   };
 };
 

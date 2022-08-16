@@ -40,16 +40,12 @@ const dialogsReducer = (state = initialState, action: ActionType): State => {
 };
 
 //Action Creators
-type ActionType = AddMessageT;
+type ActionType = ReturnType<typeof addMessageAC>;
 
-type AddMessageT = {
-  type: typeof ADD_MESSAGE;
-  text: string;
-};
-
-export const addMessageAC = (text: string): AddMessageT => ({
-  type: ADD_MESSAGE,
-  text,
-});
+export const addMessageAC = (text: string) =>
+  ({
+    type: ADD_MESSAGE,
+    text,
+  } as const);
 
 export default dialogsReducer;

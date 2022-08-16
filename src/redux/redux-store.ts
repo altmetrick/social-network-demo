@@ -35,6 +35,16 @@ declare global {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
   }
 }
+//
+
+//Generic for ActionTypes
+type InferValueTypesFromOjbType<T> = T extends { [key: string]: infer V }
+  ? V
+  : never;
+
+export type InferActionTypes<
+  T extends { [key: string]: (...args: any) => any }
+> = ReturnType<InferValueTypesFromOjbType<T>>;
 
 window.store = store;
 

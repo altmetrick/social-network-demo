@@ -1,6 +1,6 @@
 import { getAuthUserDataThC } from './auth-reducer';
 import { ThunkAction } from 'redux-thunk';
-import { RootStateT } from '../redux-store';
+import { InferActionTypes, RootStateT } from '../redux-store';
 
 const SUCCESS_INITIALIZATION = 'app/SUCCESS_INITIALIZATION';
 
@@ -24,15 +24,14 @@ const appReducer = (state = initialState, action: ActionType): State => {
 };
 
 //Action Creators
-type ActionType = SuccessInitAT;
+type ActionType = InferActionTypes<typeof actions>;
 
-type SuccessInitAT = {
-  type: typeof SUCCESS_INITIALIZATION;
+const actions = {
+  setInitializedAC: () =>
+    ({
+      type: SUCCESS_INITIALIZATION,
+    } as const),
 };
-
-export const setInitializedAC = (): SuccessInitAT => ({
-  type: SUCCESS_INITIALIZATION,
-});
 
 //ThunkCreators
 type ThunkType = ThunkAction<Promise<void>, RootStateT, unknown, ActionType>;
@@ -42,7 +41,7 @@ export const initAppThC = (): ThunkType => {
     let promise = dispatch(getAuthUserDataThC());
 
     promise.then(() => {
-      dispatch(setInitializedAC());
+      dispatch(actions.setInitializedAC());
     });
   };
 };
