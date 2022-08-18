@@ -16,6 +16,14 @@ export enum ResultCodeWithCaptchaEnum {
   CaptchaIsRequired = 10,
 }
 
+//General types
+
+type ResponseT<DataT = {}, RC = ResultCodeEnum> = {
+  data: DataT;
+  messages: Array<string>;
+  resultCode: RC;
+};
+
 //usersAPI types
 type GetUsersResType = {
   items: Array<UserT>;
@@ -26,12 +34,12 @@ type GetUsersResType = {
 type FollowResType = {
   resultCode: ResultCodeEnum;
   messages: Array<string> | null;
-  data: any;
+  data: {};
 };
 type UnfollowResType = {
   resultCode: ResultCodeEnum;
   messages: Array<string> | null;
-  data: any;
+  data: {};
 };
 
 export const usersAPI = {
@@ -55,33 +63,17 @@ export const usersAPI = {
 };
 
 //authAPI types
-type authMeData = {
+type AuthMeData = {
   id: number;
   email: string;
   login: string;
 };
 
-type AuthMeResType = {
-  resultCode: number;
-  messages: Array<string>;
-  data: authMeData;
-};
-
-type LoginResType = {
-  resultCode: ResultCodeEnum | ResultCodeWithCaptchaEnum;
-  messages: Array<string>;
-  data: any;
-};
-
-type LogOutResType = {
-  resultCode: ResultCodeEnum;
-  messages: Array<string>;
-  data: any;
-};
-
 export const authAPI = {
   authMe: () => {
-    return instance.get<AuthMeResType>('auth/me').then((res) => res.data);
+    return instance
+      .get<ResponseT<AuthMeData>>('auth/me')
+      .then((res) => res.data);
   },
   login: (
     email: string,
@@ -90,39 +82,25 @@ export const authAPI = {
     captcha: string | null = null
   ) => {
     return instance
-      .post<LoginResType>('auth/login', {
-        email,
-        password,
-        rememberMe,
-        captcha,
-      })
+      .post<ResponseT<{}, ResultCodeEnum | ResultCodeWithCaptchaEnum>>(
+        'auth/login',
+        {
+          email,
+          password,
+          rememberMe,
+          captcha,
+        }
+      )
       .then((res) => res.data);
   },
   logOut: () => {
-    return instance.delete<LogOutResType>('auth/login').then((res) => res.data);
+    return instance.delete<ResponseT>('auth/login').then((res) => res.data);
   },
 };
 
 //profileAPI types
-
-type UpdateStatusResType = {
-  resultCode: ResultCodeEnum;
-  messages: Array<string>;
-  data: any;
-};
-
-type SaveImageResType = {
-  resultCode: ResultCodeEnum;
-  messages: Array<string>;
-  data: {
-    photos: PhotosT;
-  };
-};
-
-type SaveProfileResType = {
-  resultCode: ResultCodeEnum;
-  messages: Array<string>;
-  data: any;
+type SaveImageResDataT = {
+  photos: PhotosT;
 };
 
 export const profileAPI = {
@@ -138,7 +116,7 @@ export const profileAPI = {
   },
   updateStatus: (statusText: string) => {
     return instance
-      .put<UpdateStatusResType>('profile/status', {
+      .put<ResponseT>('profile/status', {
         status: statusText,
       })
       .then((res) => res.data);
@@ -148,7 +126,7 @@ export const profileAPI = {
     formData.append('image', imagFile);
 
     return instance
-      .put<SaveImageResType>('profile/photo', formData, {
+      .put<ResponseT<SaveImageResDataT>>('profile/photo', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -157,13 +135,19 @@ export const profileAPI = {
   },
   saveProfile: (profileData: ProfileDataT) => {
     return instance
-      .put<SaveProfileResType>('profile', profileData)
+      .put<ResponseT>('profile', profileData)
       .then((res) => res.data);
   },
 };
 
+type GetCaptchaUrlT = {
+  url: string;
+};
+
 export const securityAPI = {
   getCaptchaUrl: () => {
-    return instance.get('security/get-captcha-url');
+    return instance
+      .get<GetCaptchaUrlT>('security/get-captcha-url')
+      .then((res) => res.data);
   },
 };

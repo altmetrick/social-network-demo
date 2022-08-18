@@ -107,8 +107,8 @@ export const loginThC = (
       dispatch(getAuthUserDataThC());
     } else {
       if (data.resultCode === ResultCodeWithCaptchaEnum.CaptchaIsRequired) {
-        let res = await securityAPI.getCaptchaUrl();
-        dispatch(actions.getCaptchaUrlAC(res.data.url));
+        let data = await securityAPI.getCaptchaUrl();
+        dispatch(actions.getCaptchaUrlAC(data.url));
       }
 
       let action = stopSubmit('loginForm', {
