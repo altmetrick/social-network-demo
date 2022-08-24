@@ -13,6 +13,7 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import Dialogs from './components/Dialogs/Dialogs';
 import Preloader from './components/common/Preloader/Preloader';
+import { RootStateT } from './redux/redux-store';
 
 // const UsersContainer = React.lazy(() =>
 //   import('./components/Users/UsersContainer')
@@ -21,7 +22,12 @@ import Preloader from './components/common/Preloader/Preloader';
 //   import('./components/Profile/ProfileContainer')
 // );
 
-class App extends React.Component {
+type OwnPropsT = {};
+type MapStatePropsT = { isInitialized: boolean };
+type MapDispatchPropsT = { initApp: () => void };
+type PropsT = OwnPropsT & MapStatePropsT & MapDispatchPropsT;
+
+class App extends React.Component<PropsT> {
   catchAllUnhandledErrors = (reason, e) => {
     console.log(reason);
     alert('Some error has ocurred');
@@ -34,10 +40,10 @@ class App extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener(
-      'unhandledrejection',
-      this.catchAllUnhandledErrors
-    );
+    // window.removeEventListener(
+    //   'unhandledrejection',
+    //   this.catchAllUnhandledErrors
+    // );
   }
 
   render() {
@@ -73,7 +79,7 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootStateT) => ({
   isInitialized: state.app.isInitialized,
 });
 

@@ -7,15 +7,15 @@ import React, { useState, FunctionComponent, ChangeEvent } from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 import ProfileStatus from './ProfileStatus/ProfileStatus';
 import ProfileData from './ProfileData/ProfileData';
-import ProfileDataForm from './ProfileDataForm/ProfileDataForm';
+import ProfileDataForm, {
+  PforileFormDataT,
+} from './ProfileDataForm/ProfileDataForm';
 import { ProfileDataT } from '../../../types/types';
 
 type PropsT = {
   isOwner: boolean;
-  saveImage: (imageFile: any) => (dispatch: any) => Promise<void>;
-  saveProfile: (
-    profileData: ProfileDataT
-  ) => (dispatch: any, getState: any) => Promise<any>;
+  saveImage: (imageFile: File) => (dispatch: any) => Promise<void>;
+  saveProfile: (profileData: PforileFormDataT) => Promise<any>;
   isUploading: boolean;
 
   userData: ProfileDataT;
@@ -26,13 +26,14 @@ type PropsT = {
 const ProfileInfo: FunctionComponent<PropsT> = (props) => {
   const [editMode, setEditMode] = useState(false);
 
-  const onImageChange = (e: any) => {
-    const imageFile = e.target.files[0];
-    props.saveImage(imageFile);
+  const onImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
+      props.saveImage(e.target.files[0]);
+    }
   };
 
-  const onFormSubmit = (formData) => {
-    //@ts-ignore
+  const onFormSubmit = (formData: PforileFormDataT) => {
+    //todo: remove then
     props.saveProfile(formData).then(() => {
       setEditMode(false);
     });
@@ -86,8 +87,6 @@ const ProfileInfo: FunctionComponent<PropsT> = (props) => {
         {editMode ? (
           <ProfileDataForm
             initialValues={props.userData}
-            //@ts-ignore
-            userData={props.userData}
             onSubmit={onFormSubmit}
           />
         ) : (

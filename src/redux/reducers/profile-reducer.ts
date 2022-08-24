@@ -156,7 +156,7 @@ export const updateUserStatusThC = (statusText: string): ThunkType => {
   };
 };
 
-export const saveImageThC = (imageFile): ThunkType => {
+export const saveImageThC = (imageFile: File): ThunkType => {
   return async (dispatch) => {
     dispatch(actions.toggleIsUploadingImgAC(true));
     let data = await profileAPI.saveImage(imageFile);

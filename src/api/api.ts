@@ -133,7 +133,7 @@ export const profileAPI = {
       })
       .then((res) => res.data);
   },
-  saveProfile: (profileData: ProfileDataT) => {
+  saveProfile: (profileData: Omit<ProfileDataT, 'userId'>) => {
     return instance
       .put<ResponseT>('profile', profileData)
       .then((res) => res.data);

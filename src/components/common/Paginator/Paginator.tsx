@@ -1,3 +1,4 @@
+//@ts-ignore
 import s from './Paginator.module.css';
 import { useState } from 'react';
 import React, { FunctionComponent } from 'react';

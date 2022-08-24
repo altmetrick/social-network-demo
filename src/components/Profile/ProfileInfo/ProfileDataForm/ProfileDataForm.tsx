@@ -1,9 +1,23 @@
 import s from './../ProfileInfo.module.css';
-
-import { reduxForm, Field } from 'redux-form';
+import React, { FunctionComponent } from 'react';
+import { reduxForm, Field, InjectedFormProps } from 'redux-form';
 import { FormControlWithInputTag } from '../../../common/FormControls/FormControls';
+import { ContactsT, ProfileDataT } from '../../../../types/types';
 
-const ProfileFormRedux = (props) => {
+type FormOwnPropsT = {
+  initialValues: ProfileDataT;
+};
+export type PforileFormDataT = {
+  fullName: string;
+  aboutMe: string | null;
+  lookingForAJob: boolean;
+  lookingForAJobDescription: string | null;
+  contacts: ContactsT;
+};
+
+const ProfileFormRedux: FunctionComponent<
+  InjectedFormProps<PforileFormDataT, FormOwnPropsT> & FormOwnPropsT
+> = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <button>save</button>
@@ -47,7 +61,7 @@ const ProfileFormRedux = (props) => {
       </div>
       <div>
         <h3>Contacts</h3>
-        {Object.keys(props.userData.contacts).map((key) => {
+        {Object.keys(props.initialValues.contacts).map((key) => {
           return (
             <div key={key}>
               {key}:
@@ -71,8 +85,8 @@ const ProfileFormRedux = (props) => {
   );
 };
 
-const ProfileDataForm = reduxForm({ form: 'profileDataForm' })(
-  ProfileFormRedux
-);
+const ProfileDataForm = reduxForm<PforileFormDataT, FormOwnPropsT>({
+  form: 'profileDataForm',
+})(ProfileFormRedux);
 
 export default ProfileDataForm;

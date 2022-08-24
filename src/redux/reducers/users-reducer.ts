@@ -73,6 +73,7 @@ const usersReducer = (state = initialState, action: ActionType): StateT => {
 };
 
 //Action Creators
+
 type ActionType = InferActionTypes<typeof actions>;
 
 const actions = {

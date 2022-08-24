@@ -38,14 +38,10 @@ declare global {
 //
 
 //Generic for ActionTypes
-type InferValueTypesFromOjbType<T> = T extends { [key: string]: infer V }
-  ? V
-  : never;
 
 export type InferActionTypes<
   T extends { [key: string]: (...args: any) => any }
-> = ReturnType<InferValueTypesFromOjbType<T>>;
-
+> = T extends { [key: string]: (...args: any) => infer U } ? U : never;
 window.store = store;
 
 export default store;

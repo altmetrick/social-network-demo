@@ -1,8 +1,9 @@
 import MyPosts from './MyPosts';
 import { connect } from 'react-redux';
-import { actions } from '../../../redux/reducers/profile-reducer.ts';
+import { actions } from '../../../redux/reducers/profile-reducer';
+import { RootStateT } from '../../../redux/redux-store';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootStateT) => {
   return {
     posts: state.profilePage.posts,
   };
