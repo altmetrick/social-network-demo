@@ -20,7 +20,7 @@ const initialState = {
   followingProgress: [] as Array<number>,
 };
 
-type StateT = typeof initialState;
+export type StateT = typeof initialState;
 
 const usersReducer = (state = initialState, action: ActionType): StateT => {
   switch (action.type) {
@@ -76,7 +76,7 @@ const usersReducer = (state = initialState, action: ActionType): StateT => {
 
 type ActionType = InferActionTypes<typeof actions>;
 
-const actions = {
+export const actions = {
   toggleFollowedAC: (userId: number) =>
     ({
       type: TOGGLE_FOLLOWED,

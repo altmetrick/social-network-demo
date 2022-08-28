@@ -31,7 +31,7 @@ type GetUsersResType = {
   error: string | null;
 };
 
-type FollowResType = {
+export type FollowResType = {
   resultCode: ResultCodeEnum;
   messages: Array<string> | null;
   data: {};
