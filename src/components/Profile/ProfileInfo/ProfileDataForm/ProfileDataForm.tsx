@@ -16,7 +16,7 @@ export type PforileFormDataT = {
 };
 
 const ProfileFormRedux: FunctionComponent<
-  InjectedFormProps<PforileFormDataT, FormOwnPropsT> & FormOwnPropsT
+  InjectedFormProps<ProfileDataT, FormOwnPropsT> & FormOwnPropsT
 > = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
@@ -85,7 +85,7 @@ const ProfileFormRedux: FunctionComponent<
   );
 };
 
-const ProfileDataForm = reduxForm<PforileFormDataT, FormOwnPropsT>({
+const ProfileDataForm = reduxForm<ProfileDataT, FormOwnPropsT>({
   form: 'profileDataForm',
 })(ProfileFormRedux);
 

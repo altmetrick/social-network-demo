@@ -15,7 +15,7 @@ import { ProfileDataT } from '../../../types/types';
 type PropsT = {
   isOwner: boolean;
   saveImage: (imageFile: File) => (dispatch: any) => Promise<void>;
-  saveProfile: (profileData: PforileFormDataT) => Promise<any>;
+  saveProfile: (profileData: ProfileDataT) => Promise<any>;
   isUploading: boolean;
 
   userData: ProfileDataT;
@@ -32,7 +32,7 @@ const ProfileInfo: FunctionComponent<PropsT> = (props) => {
     }
   };
 
-  const onFormSubmit = (formData: PforileFormDataT) => {
+  const onFormSubmit = (formData: ProfileDataT) => {
     //todo: remove then
     props.saveProfile(formData).then(() => {
       setEditMode(false);

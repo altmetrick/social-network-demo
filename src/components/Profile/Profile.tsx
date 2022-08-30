@@ -9,9 +9,7 @@ import { ProfileDataT } from '../../types/types';
 type PropsT = {
   isOwner: boolean;
   saveImage: (imageFile: any) => (dispatch: any) => Promise<void>;
-  saveProfile: (
-    profileData: ProfileDataT
-  ) => (dispatch: any, getState: any) => Promise<undefined>;
+  saveProfile: (profileData: ProfileDataT) => Promise<any>;
   isUploading: boolean;
 
   userData: ProfileDataT;
