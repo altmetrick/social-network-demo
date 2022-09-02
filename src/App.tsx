@@ -13,6 +13,7 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import Dialogs from './components/Dialogs/Dialogs';
 import Preloader from './components/common/Preloader/Preloader';
+import MyForm from './components/MyForm/MyForm';
 import { RootStateT } from './redux/redux-store';
 
 // const UsersContainer = React.lazy(() =>
@@ -70,6 +71,7 @@ class App extends React.Component<PropsT> {
                 <Route path="/profile/:userId" element={<ProfileContainer />} />
                 <Route path="/dialogs/*" element={<Dialogs />} />
                 <Route path="/timer/" element={<Timer />} />
+                <Route path="/myForm/" element={<MyForm />} />
               </Routes>
             </Suspense>
           </div>

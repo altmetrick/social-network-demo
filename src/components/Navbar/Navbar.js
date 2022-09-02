@@ -31,6 +31,9 @@ const Navbar = () => {
       <div className={s.item}>
         <Link to="/timer">Timer</Link>
       </div>
+      <div className={s.item}>
+        <Link to="/myForm">My Form</Link>
+      </div>
     </div>
   );
 };

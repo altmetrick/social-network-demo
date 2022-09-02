@@ -43,9 +43,11 @@ type UnfollowResType = {
 };
 
 export const usersAPI = {
-  getUsers: (pageSize: number, currentPage: number) => {
+  getUsers: (pageSize: number, currentPage: number, term: string = '') => {
     return instance
-      .get<GetUsersResType>(`users?count=${pageSize}&page=${currentPage}`)
+      .get<GetUsersResType>(
+        `users?count=${pageSize}&page=${currentPage}&term=${term}`
+      )
       .then((res) => res.data);
   },
 

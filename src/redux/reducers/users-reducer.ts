@@ -8,6 +8,7 @@ const TOGGLE_FOLLOWED = 'users/TOGGLE_FOLLOWED';
 const SET_USERS = 'users/SET_USERS';
 const SET_CURRENT_PAGE = 'users/SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'users/SET_TOTAL_USERS_COUNT';
+const SET_FILTER = 'users/SET_FILTER';
 const TOGGLE_IS_FETCHING = 'users/TOGGLE_IS_FETCHING';
 const TOGGLE_FOLLOWING_IN_PROGRESS = 'users/TOGGLE_FOLLOWING_IN_PROGRESS';
 
@@ -18,6 +19,9 @@ const initialState = {
   currentPage: 1,
   isFetching: false,
   followingProgress: [] as Array<number>,
+  filter: {
+    term: '',
+  },
 };
 
 export type StateT = typeof initialState;
@@ -51,6 +55,12 @@ const usersReducer = (state = initialState, action: ActionType): StateT => {
       return {
         ...state,
         currentPage: action.pageNumber,
+      };
+
+    case SET_FILTER:
+      return {
+        ...state,
+        filter: { ...state.filter, term: action.payload.term },
       };
 
     case TOGGLE_IS_FETCHING:
@@ -101,6 +111,12 @@ export const actions = {
       pageNumber,
     } as const),
 
+  setFilterAC: (filter: { term: string }) =>
+    ({
+      type: SET_FILTER,
+      payload: { term: filter.term },
+    } as const),
+
   toggleIsFetchingAC: (isFetching: boolean) =>
     ({
       type: TOGGLE_IS_FETCHING,
@@ -121,13 +137,15 @@ type ThunkType = ThunkAction<Promise<void>, RootStateT, unknown, ActionType>;
 
 export const getUsersThC = (
   pageSize: number,
-  currentPage: number
+  currentPage: number,
+  term: string = ''
 ): ThunkType => {
   return async (dispatch, getState) => {
     dispatch(actions.toggleIsFetchingAC(true));
     dispatch(actions.setCurrentPageAC(currentPage));
+    dispatch(actions.setFilterAC({ term }));
 
-    let data = await usersAPI.getUsers(pageSize, currentPage);
+    let data = await usersAPI.getUsers(pageSize, currentPage, term);
 
     dispatch(actions.setUsersAC(data.items));
     dispatch(actions.setTotalUsersCountAC(data.totalCount));

@@ -19,10 +19,11 @@ type MapStatePropsT = {
   followingProgress: Array<number>;
   pageSize: number;
   currentPage: number;
+  searchTerm: string;
 };
 
 type MapDispatchPropsT = {
-  getUsers: (pageSize: number, currentPage: number) => void;
+  getUsers: (pageSize: number, currentPage: number, term?: string) => void;
   follow: (userId: number) => void;
   unfollow: (userId: number) => void;
 };
@@ -37,7 +38,11 @@ class UsersContainer extends Component<PropsT> {
   }
 
   onPageChanged = (pageNum: number) => {
-    this.props.getUsers(this.props.pageSize, pageNum);
+    this.props.getUsers(this.props.pageSize, pageNum, this.props.searchTerm);
+  };
+
+  onSearchFormSubmit = (term: string) => {
+    this.props.getUsers(this.props.pageSize, 1, term);
   };
 
   render() {
@@ -52,6 +57,7 @@ class UsersContainer extends Component<PropsT> {
             totalUsersCount={this.props.totalUsersCount}
             pageSize={this.props.pageSize}
             currentPage={this.props.currentPage}
+            onSearchFormSubmit={this.onSearchFormSubmit}
             //
             followingProgress={this.props.followingProgress}
             follow={this.props.follow}
@@ -71,6 +77,7 @@ const mapStateToProps = (state: RootStateT): MapStatePropsT => {
     currentPage: state.usersPage.currentPage,
     isFetching: state.usersPage.isFetching,
     followingProgress: state.usersPage.followingProgress,
+    searchTerm: state.usersPage.filter.term,
   };
 };
 
