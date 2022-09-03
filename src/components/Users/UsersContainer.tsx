@@ -63,6 +63,7 @@ class UsersContainer extends Component<PropsT> {
             pageSize={this.props.pageSize}
             currentPage={this.props.currentPage}
             onFilterChanged={this.onFilterChanged}
+            filter={this.props.filter}
             //
             followingProgress={this.props.followingProgress}
             follow={this.props.follow}

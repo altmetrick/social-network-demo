@@ -8,6 +8,7 @@ import { FilterType } from '../../redux/reducers/users-reducer';
 type PropsT = {
   onPageChanged: (pageNum: number) => void;
   onFilterChanged: (filter: FilterType) => void;
+  filter: FilterType;
   users: Array<UserT>;
   totalUsersCount: number;
   pageSize: number;
@@ -39,7 +40,10 @@ const Users: FunctionComponent<PropsT> = (props) => {
   return (
     <div>
       <Paginator {...props} totalItemsCount={props.totalUsersCount} />
-      <UsersSearchForm onFilterChanged={props.onFilterChanged} />
+      <UsersSearchForm
+        onFilterChanged={props.onFilterChanged}
+        filter={props.filter}
+      />
       <h3>Users</h3>
       {usersEls}
     </div>

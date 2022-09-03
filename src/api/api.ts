@@ -48,7 +48,7 @@ export const usersAPI = {
     return instance
       .get<GetUsersResType>(
         `users?count=${pageSize}&page=${currentPage}&term=${filter.term}` +
-          (filter.friend ? `&friend=${filter.friend}` : '')
+          (filter.friend === null ? '' : `&friend=${filter.friend}`)
       )
       .then((res) => res.data);
   },

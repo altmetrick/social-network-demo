@@ -4,15 +4,37 @@ import { FilterType } from '../../redux/reducers/users-reducer';
 
 type PropsT = {
   onFilterChanged: (filter: FilterType) => void;
+  filter: FilterType;
+};
+
+type SearchUsersValuesT = {
+  term: string;
+  friend: 'null' | 'true' | 'false';
 };
 
 const UsersSearchForm: FunctionComponent<PropsT> = (props) => {
-  const submit = (values: FilterType) => {
-    props.onFilterChanged(values);
+  const submit = (values: SearchUsersValuesT) => {
+    const filter: FilterType = {
+      term: values.term,
+      friend:
+        values.friend === 'null'
+          ? null
+          : values.friend === 'true'
+          ? true
+          : false,
+    };
+
+    props.onFilterChanged(filter);
   };
 
   return (
-    <Formik initialValues={{ term: '', friend: null }} onSubmit={submit}>
+    <Formik
+      initialValues={{
+        term: props.filter.term,
+        friend: props.filter.friend as never,
+      }}
+      onSubmit={submit}
+    >
       {(formik) => (
         <Form>
           <Field name="term" type="text" />
