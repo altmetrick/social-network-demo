@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { FilterType } from '../redux/reducers/users-reducer';
 import { PhotosT, ProfileDataT, UserT } from '../types/types';
 
 const instance = axios.create({
@@ -43,10 +44,11 @@ type UnfollowResType = {
 };
 
 export const usersAPI = {
-  getUsers: (pageSize: number, currentPage: number, term: string = '') => {
+  getUsers: (pageSize: number, currentPage: number, filter: FilterType) => {
     return instance
       .get<GetUsersResType>(
-        `users?count=${pageSize}&page=${currentPage}&term=${term}`
+        `users?count=${pageSize}&page=${currentPage}&term=${filter.term}` +
+          (filter.friend ? `&friend=${filter.friend}` : '')
       )
       .then((res) => res.data);
   },

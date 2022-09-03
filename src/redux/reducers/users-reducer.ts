@@ -21,8 +21,10 @@ const initialState = {
   followingProgress: [] as Array<number>,
   filter: {
     term: '',
+    friend: null as null | boolean,
   },
 };
+export type FilterType = typeof initialState.filter;
 
 export type StateT = typeof initialState;
 
@@ -60,7 +62,7 @@ const usersReducer = (state = initialState, action: ActionType): StateT => {
     case SET_FILTER:
       return {
         ...state,
-        filter: { ...state.filter, term: action.payload.term },
+        filter: { ...action.payload },
       };
 
     case TOGGLE_IS_FETCHING:
@@ -111,10 +113,10 @@ export const actions = {
       pageNumber,
     } as const),
 
-  setFilterAC: (filter: { term: string }) =>
+  setFilterAC: (filter: FilterType) =>
     ({
       type: SET_FILTER,
-      payload: { term: filter.term },
+      payload: { ...filter },
     } as const),
 
   toggleIsFetchingAC: (isFetching: boolean) =>
@@ -138,14 +140,14 @@ type ThunkType = ThunkAction<Promise<void>, RootStateT, unknown, ActionType>;
 export const getUsersThC = (
   pageSize: number,
   currentPage: number,
-  term: string = ''
+  filter: FilterType
 ): ThunkType => {
   return async (dispatch, getState) => {
     dispatch(actions.toggleIsFetchingAC(true));
     dispatch(actions.setCurrentPageAC(currentPage));
-    dispatch(actions.setFilterAC({ term }));
+    dispatch(actions.setFilterAC(filter));
 
-    let data = await usersAPI.getUsers(pageSize, currentPage, term);
+    let data = await usersAPI.getUsers(pageSize, currentPage, filter);
 
     dispatch(actions.setUsersAC(data.items));
     dispatch(actions.setTotalUsersCountAC(data.totalCount));
