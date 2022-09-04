@@ -9,19 +9,12 @@ import Timer from './components/Timer/Timer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import Login from './components/Login/Login';
-import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
+import { UsersPage } from './components/Users/UsersPage';
+import { ProfilePage } from './components/Profile/ProfilePage';
 import Dialogs from './components/Dialogs/Dialogs';
 import Preloader from './components/common/Preloader/Preloader';
 import MyForm from './components/MyForm/MyForm';
 import { RootStateT } from './redux/redux-store';
-
-// const UsersContainer = React.lazy(() =>
-//   import('./components/Users/UsersContainer')
-// );
-// const ProfileContainer = React.lazy(() =>
-//   import('./components/Profile/ProfileContainer')
-// );
 
 type OwnPropsT = {};
 type MapStatePropsT = { isInitialized: boolean };
@@ -67,8 +60,8 @@ class App extends React.Component<PropsT> {
                   path="/"
                   element={<Navigate to="/profile/myProfile" />}
                 />
-                <Route path="/users" element={<UsersContainer />} />
-                <Route path="/profile/:userId" element={<ProfileContainer />} />
+                <Route path="/users" element={<UsersPage />} />
+                <Route path="/profile/:userId" element={<ProfilePage />} />
                 <Route path="/dialogs/*" element={<Dialogs />} />
                 <Route path="/timer/" element={<Timer />} />
                 <Route path="/myForm/" element={<MyForm />} />

@@ -31,7 +31,10 @@ const UsersSearchForm: FunctionComponent<PropsT> = (props) => {
     <Formik
       initialValues={{
         term: props.filter.term,
-        friend: props.filter.friend as never,
+        friend:
+          props.filter.friend === null
+            ? 'null'
+            : (props.filter.friend as never),
       }}
       onSubmit={submit}
     >

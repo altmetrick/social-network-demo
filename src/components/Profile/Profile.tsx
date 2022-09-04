@@ -5,32 +5,54 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import React, { FunctionComponent } from 'react';
 import { ProfileDataT } from '../../types/types';
+import { useDispatch, useSelector } from 'react-redux';
+
+import {
+  getIsUploading,
+  getUserProfileData,
+  getUserStatus,
+} from '../../redux/selectors/profile-selectors';
+
+import {
+  saveImageThC,
+  saveProfileThC,
+  updateUserStatusThC,
+} from '../../redux/reducers/profile-reducer';
 
 type PropsT = {
   isOwner: boolean;
-  saveImage: (imageFile: any) => (dispatch: any) => Promise<void>;
-  saveProfile: (profileData: ProfileDataT) => Promise<any>;
-  isUploading: boolean;
-
-  userData: ProfileDataT;
-  userStatus: string;
-  updateUserStatus: (statusText: string) => (dispatch: any) => Promise<void>;
 };
 
 const Profile: FunctionComponent<PropsT> = (props) => {
+  const dispatch = useDispatch();
+
+  const isUploading = useSelector(getIsUploading);
+  const userData = useSelector(getUserProfileData);
+  const userStatus = useSelector(getUserStatus);
+
+  const saveProfile = (profileData: ProfileDataT) => {
+    return dispatch<any>(saveProfileThC(profileData));
+  };
+  const saveImage = (imageFile: File) => {
+    dispatch<any>(saveImageThC(imageFile));
+  };
+  const updateUserStatus = (statusText: string) => {
+    dispatch<any>(updateUserStatusThC(statusText));
+  };
+
   return (
     <div>
       <h2>Profile</h2>
-      {props.userData ? (
+      {userData ? (
         <ProfileInfo
           isOwner={props.isOwner}
-          saveProfile={props.saveProfile}
-          saveImage={props.saveImage}
-          isUploading={props.isUploading}
+          saveProfile={saveProfile}
+          saveImage={saveImage}
+          isUploading={isUploading}
           //
-          userData={props.userData}
-          userStatus={props.userStatus}
-          updateUserStatus={props.updateUserStatus}
+          userData={userData as ProfileDataT}
+          userStatus={userStatus}
+          updateUserStatus={updateUserStatus}
         />
       ) : (
         <Preloader />

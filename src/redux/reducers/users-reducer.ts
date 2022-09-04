@@ -86,7 +86,7 @@ const usersReducer = (state = initialState, action: ActionType): StateT => {
 
 //Action Creators
 
-type ActionType = InferActionTypes<typeof actions>;
+export type ActionType = InferActionTypes<typeof actions>;
 
 export const actions = {
   toggleFollowedAC: (userId: number) =>
@@ -135,7 +135,12 @@ export const actions = {
 
 //Thunk Creators
 
-type ThunkType = ThunkAction<Promise<void>, RootStateT, unknown, ActionType>;
+export type ThunkType = ThunkAction<
+  Promise<void>,
+  RootStateT,
+  unknown,
+  ActionType
+>;
 
 export const getUsersThC = (
   pageSize: number,

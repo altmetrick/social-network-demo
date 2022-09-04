@@ -11,16 +11,18 @@ import ProfileDataForm, {
   PforileFormDataT,
 } from './ProfileDataForm/ProfileDataForm';
 import { ProfileDataT } from '../../../types/types';
+import { useSelector } from 'react-redux';
+import { getIsUploading } from '../../../redux/selectors/profile-selectors';
 
 type PropsT = {
   isOwner: boolean;
-  saveImage: (imageFile: File) => (dispatch: any) => Promise<void>;
+  saveImage: (imageFile: File) => void;
   saveProfile: (profileData: ProfileDataT) => Promise<any>;
   isUploading: boolean;
 
   userData: ProfileDataT;
   userStatus: string;
-  updateUserStatus: (statusText: string) => (dispatch: any) => Promise<void>;
+  updateUserStatus: (statusText: string) => void;
 };
 
 const ProfileInfo: FunctionComponent<PropsT> = (props) => {

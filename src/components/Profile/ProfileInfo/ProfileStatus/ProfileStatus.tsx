@@ -8,7 +8,7 @@ import React, {
 type PropsT = {
   isOwner: boolean;
   userStatus: string;
-  updateUserStatus: (statusText: string) => (dispatch: any) => Promise<void>;
+  updateUserStatus: (statusText: string) => void;
 };
 
 const ProfileStatus: FunctionComponent<PropsT> = (props) => {
