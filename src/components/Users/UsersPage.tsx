@@ -12,6 +12,7 @@ import {
   getPageSize,
   getCurrentPage,
 } from '../../redux/selectors/users-selectors';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 type UsersPagePropsT = {};
 
 export const UsersPage: FunctionComponent<UsersPagePropsT> = (props) => {
@@ -22,8 +23,38 @@ export const UsersPage: FunctionComponent<UsersPagePropsT> = (props) => {
 
   const dispatch = useDispatch();
 
+  const [searchParams, setSearchParams] = useSearchParams({});
+
   useEffect(() => {
-    dispatch<any>(getUsersThC(pageSize, currentPage, filter));
+    //Setting params on dependencies change
+    setSearchParams({
+      count: pageSize,
+      page: currentPage,
+      term: filter.term,
+      friend: String(filter.friend),
+    } as never);
+  }, [filter, pageSize, currentPage]);
+
+  useEffect(() => {
+    //Read query params from address bar on initial comp load
+    const currentParams = Object.fromEntries(searchParams);
+
+    const pageSizeParam = parseInt(currentParams.count);
+    const currentPageParam = parseInt(
+      !currentParams.page ? '1' : currentParams.page
+    );
+    const filterParam = {
+      term: currentParams.term == undefined ? '' : currentParams.term,
+      friend:
+        currentParams.friend === ('null' && undefined)
+          ? null
+          : currentParams.friend === 'true'
+          ? true
+          : false,
+    };
+
+    //call getUsersThC with arguments from query string on component load
+    dispatch<any>(getUsersThC(pageSizeParam, currentPageParam, filterParam));
   }, []);
 
   return (

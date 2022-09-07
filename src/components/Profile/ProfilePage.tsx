@@ -4,9 +4,8 @@ import React, { Component, FunctionComponent, useEffect } from 'react';
 import Profile from './Profile';
 import AuthRedirect from '../../hoc/AuthRedirect';
 
-import { compose } from 'redux';
-import { connect, useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   getProfileThC,
   getUserStatusThC,
