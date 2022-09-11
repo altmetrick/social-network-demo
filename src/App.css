@@ -28,6 +28,12 @@
   background-image: linear-gradient(120deg, #2af598 0%, #009efd 100%);
 }
 
+.profileLogin {
+  color: aliceblue;
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
 .navbar {
   grid-area: navbar;
   background-image: linear-gradient(240deg, #2af598 0%, #009efd 100%);

@@ -1,19 +1,23 @@
 import { Link } from 'react-router-dom';
+import { Button, Row, Col } from 'antd';
 
 const Header = (props) => {
   return (
-    <div className="header">
-      {props.isAuth ? (
-        <div>
-          <div>{props.login}</div>
+    <Row>
+      <Col span={6}>
+        {props.isAuth ? (
           <div>
-            <button onClick={props.logOut}>LogOut</button>
+            <span className="profileLogin">{props.login}</span>
+
+            <Button type="primary" size="small" onClick={props.logOut}>
+              LogOut
+            </Button>
           </div>
-        </div>
-      ) : (
-        <Link to="/login">login</Link>
-      )}
-    </div>
+        ) : (
+          <Link to="/login">login</Link>
+        )}
+      </Col>
+    </Row>
   );
 };
 

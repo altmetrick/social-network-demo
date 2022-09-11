@@ -1,3 +1,8 @@
+import 'antd/dist/antd.css';
+
+import { Button } from 'antd/lib/radio';
+import React from 'react';
+
 import { ErrorMessage, Field, Form, Formik, useFormik } from 'formik';
 
 const validate = (values) => {
@@ -55,6 +60,7 @@ const MyForm = (props) => {
           </Form>
         )}
       </Formik>
+      <Button type="primary">Hello</Button>
     </div>
   );
 };
