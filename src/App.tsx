@@ -18,14 +18,17 @@ import { initAppThC as initApp } from './redux/reducers/app-reducer';
 
 import Timer from './components/Timer/Timer';
 import HeaderContainer from './components/Header/HeaderContainer';
-import Navbar from './components/Navbar/Navbar';
+//import ChatPage from './pages/ChatPage/ChatPage';
 import Login from './components/Login/Login';
 import { UsersPage } from './components/Users/UsersPage';
 import { ProfilePage } from './components/Profile/ProfilePage';
 import Dialogs from './components/Dialogs/Dialogs';
 import Preloader from './components/common/Preloader/Preloader';
 import MyForm from './components/MyForm/MyForm';
+
 import { RootStateT } from './redux/redux-store';
+
+const ChatPage = React.lazy(() => import('./pages/ChatPage/ChatPage'));
 
 //ant
 const { Header, Content, Footer, Sider } = Layout;
@@ -84,6 +87,10 @@ const menuItems: MenuProps['items'] = [
       {
         key: 'users-sub-option1',
         label: <Link to="/users">See Users</Link>,
+      },
+      {
+        key: 'users-sub-option2',
+        label: <Link to="/chat">Chat</Link>,
       },
     ],
   },
@@ -173,6 +180,16 @@ class App extends React.Component<PropsT> {
                     />
                     <Route path="/users" element={<UsersPage />} />
                     <Route path="/profile/:userId" element={<ProfilePage />} />
+
+                    <Route
+                      path="/chat"
+                      element={
+                        <Suspense fallback={<Preloader />}>
+                          <ChatPage />
+                        </Suspense>
+                      }
+                    />
+
                     <Route path="/dialogs/*" element={<Dialogs />} />
                     <Route path="/timer/" element={<Timer />} />
                     <Route path="/myForm/" element={<MyForm />} />
@@ -180,9 +197,7 @@ class App extends React.Component<PropsT> {
                 </Content>
               </Layout>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>
-              Ant Design ©2018 Created by Ant UED
-            </Footer>
+            <Footer style={{ textAlign: 'center' }}> ©2022</Footer>
           </Layout>
         </HashRouter>
       </>
