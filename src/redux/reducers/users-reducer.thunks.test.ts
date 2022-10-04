@@ -1,4 +1,4 @@
-import { followThC, unfollowThC } from './users-reducer';
+import { followThC, unfollowThC, getUsersThC } from './users-reducer';
 import { FollowResType, ResultCodeEnum, usersAPI } from '../../api/api';
 import { actions } from './users-reducer';
 
@@ -7,7 +7,7 @@ jest.mock('../../api/api');
 const result: FollowResType = {
   resultCode: ResultCodeEnum.Success,
   messages: [],
-  data: {},
+  data: { hello: 'sdfs' },
 };
 
 const usersAPIMock = usersAPI as jest.Mocked<typeof usersAPI>;
@@ -63,5 +63,22 @@ describe('users-reducer test2', () => {
       3,
       actions.toggleFollowingProgressAC(false, 1)
     );
+  });
+});
+
+const resultGetUsers = {
+  data: { items: [], totalCount: 100, error: null },
+  messages: [],
+  resultCode: 0,
+};
+
+describe('getUsersTC', () => {
+  test('set users1', async () => {
+    const thunkgetSetUsers = getUsersThC(5, 10, {
+      term: '',
+      friend: null,
+    });
+
+    usersAPIMock.getUsers.mockReturnValue(Promise.resolve(resultGetUsers.data));
   });
 });
