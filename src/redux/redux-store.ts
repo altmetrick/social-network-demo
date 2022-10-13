@@ -8,6 +8,7 @@ import dialogsReducer from './reducers/dialogs-reducer';
 import usersReducer from './reducers/users-reducer';
 import authReducer from './reducers/auth-reducer';
 import appReducer from './reducers/app-reducer';
+import chatReducer from './reducers/chat-reducer';
 
 const rootReducer = combineReducers({
   profilePage: profileReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   usersPage: usersReducer,
   authData: authReducer,
   app: appReducer,
+  chat: chatReducer,
   form: formReducer,
 });
 
@@ -38,7 +40,6 @@ declare global {
 //
 
 //Generic for ActionTypes
-
 export type InferActionTypes<
   T extends { [key: string]: (...args: any) => any }
 > = T extends { [key: string]: (...args: any) => infer U } ? U : never;
