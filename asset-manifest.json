@@ -1,23 +1,17 @@
 {
   "files": {
-    "main.css": "/social-network-demo/static/css/main.7fa65036.css",
-    "main.js": "/social-network-demo/static/js/main.87f0fbcb.js",
-    "static/css/947.dd11c67f.chunk.css": "/social-network-demo/static/css/947.dd11c67f.chunk.css",
-    "static/js/947.de5a24f6.chunk.js": "/social-network-demo/static/js/947.de5a24f6.chunk.js",
-    "static/css/785.0d048fcb.chunk.css": "/social-network-demo/static/css/785.0d048fcb.chunk.css",
-    "static/js/785.be16b9b3.chunk.js": "/social-network-demo/static/js/785.be16b9b3.chunk.js",
+    "main.css": "/social-network-demo/static/css/main.18ffb141.css",
+    "main.js": "/social-network-demo/static/js/main.f27f060d.js",
+    "static/js/388.fd0500c2.chunk.js": "/social-network-demo/static/js/388.fd0500c2.chunk.js",
     "static/media/preloader.gif": "/social-network-demo/static/media/preloader.6048b0df46dace356408.gif",
     "static/media/User_default_avatar.png": "/social-network-demo/static/media/User_default_avatar.277ea04b84e2d6a272ea.png",
     "index.html": "/social-network-demo/index.html",
-    "main.7fa65036.css.map": "/social-network-demo/static/css/main.7fa65036.css.map",
-    "main.87f0fbcb.js.map": "/social-network-demo/static/js/main.87f0fbcb.js.map",
-    "947.dd11c67f.chunk.css.map": "/social-network-demo/static/css/947.dd11c67f.chunk.css.map",
-    "947.de5a24f6.chunk.js.map": "/social-network-demo/static/js/947.de5a24f6.chunk.js.map",
-    "785.0d048fcb.chunk.css.map": "/social-network-demo/static/css/785.0d048fcb.chunk.css.map",
-    "785.be16b9b3.chunk.js.map": "/social-network-demo/static/js/785.be16b9b3.chunk.js.map"
+    "main.18ffb141.css.map": "/social-network-demo/static/css/main.18ffb141.css.map",
+    "main.f27f060d.js.map": "/social-network-demo/static/js/main.f27f060d.js.map",
+    "388.fd0500c2.chunk.js.map": "/social-network-demo/static/js/388.fd0500c2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7fa65036.css",
-    "static/js/main.87f0fbcb.js"
+    "static/css/main.18ffb141.css",
+    "static/js/main.f27f060d.js"
   ]
 }
