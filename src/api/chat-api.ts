@@ -1,9 +1,13 @@
 let subscribers: SubscriberT[] = [];
 
+let subscribers2 = {
+  'message-received': [],
+  'status-changed': [],
+};
+
 let ws: WebSocket | null = null;
 
 const onCloseHandler = () => {
-  console.log('closed');
   setTimeout(createWs, 3000);
 };
 const onMessageHandler = (e: MessageEvent) => {

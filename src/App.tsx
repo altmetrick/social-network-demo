@@ -2,11 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import './App.css';
 
 //ant
-import {
-  LaptopOutlined,
-  NotificationOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu } from 'antd';
 
@@ -156,10 +152,7 @@ class App extends React.Component<PropsT> {
                 <Breadcrumb.Item>App</Breadcrumb.Item>
               </Breadcrumb>
 
-              <Layout
-                className="site-layout-background"
-                style={{ padding: '24px 0' }}
-              >
+              <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
                 <Sider className="site-layout-background" width={200}>
                   <Menu
                     mode="inline"
@@ -174,10 +167,7 @@ class App extends React.Component<PropsT> {
                   <Routes>
                     <Route path="/login" element={<Login />} />
 
-                    <Route
-                      path="/"
-                      element={<Navigate to="/profile/myProfile" />}
-                    />
+                    <Route path="/" element={<Navigate to="/profile/myProfile" />} />
                     <Route path="/users" element={<UsersPage />} />
                     <Route path="/profile/:userId" element={<ProfilePage />} />
 

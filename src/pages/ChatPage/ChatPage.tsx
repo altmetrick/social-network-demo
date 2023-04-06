@@ -44,7 +44,7 @@ const Messages: FunctionComponent<{}> = (props) => {
   const messages = useSelector((state: RootStateT) => state.chat.messages);
 
   const messagesEls = messages.map((item) => (
-    <Message key={Math.random()} {...item} />
+    <Message key={item.userId + item.message} {...item} />
   ));
 
   return (
